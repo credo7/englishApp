@@ -1,0 +1,120 @@
+.App {
+  display: grid;
+  grid-template-columns: 5% 40% 10% 40% 5%;
+  grid-template-areas:
+    "....... word-list-container ...... ....... ......"
+    "....... word-list-container2 word-list-container2 word-list-container2 ......";
+  .word-list-container {
+    grid-area: word-list-container;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 12px;
+    justify-content: left;
+  }
+  .word-list-container2 {
+    grid-area: word-list-container2;
+    h1 {
+      font-size: 80px;
+      margin-right: auto;
+    }
+    ul {
+      columns: 5;
+      -webkit-columns: 5;
+      -moz-columns: 5;
+    }
+    li {
+      padding: 12px;
+      display: block;
+      list-style-type: none;
+      font-size: 32px;
+    }
+  }
+  button {
+    all: unset;
+    width: 25%;
+  }
+  .submit {
+    border-radius: 5px;
+    background-color: #ae9cff;
+    border-radius: 8px;
+    padding: 15px 0;
+    font-size: 22px;
+    margin-left: 16px;
+    color: white;
+  }
+  input {
+    margin: 32px 16px 16px 0;
+    height: 60px;
+    width: 70%;
+    padding: 5px;
+    font-size: 24px;
+    border-bottom: 3px solid #ae9cff;
+  }
+  .result {
+    position: relative;
+    color: black;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    h3 {
+      font-size: 30px;
+      color: #1f194c;
+    }
+    .word {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      width: 100%;
+    }
+    button {
+      text-align: right;
+      color: #ae9cff;
+      font-size: 18px;
+      background-color: transperent;
+    }
+    .details {
+      display: flex;
+      gap: 10px;
+      color: #b3b6d4;
+      font-size: 14px;
+    }
+    .word-meaning {
+      color: #575a7b;
+      margin-top: 10px;
+      text-align: left;
+    }
+    .word-example {
+      color: #575a7b;
+      font-style: italic;
+      border-left: 5px solid #ae9cff;
+      padding-left: 20px;
+      margin-top: 20px;
+      border-radius: 3px;
+    }
+  }
+  .word-list {
+    width: 500px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-areas: "first-list second-list third-list fouth-list";
+  }
+  .example-and-word {
+    width: 100%;
+    display: flex;
+    button {
+      color: black;
+      text-align: center;
+    }
+  }
+  .add-button {
+    margin-left: auto;
+    border-radius: 5px;
+    background-color: #f2f4f6;
+    border-radius: 8px;
+    padding: 8px 0;
+    font-size: 22px;
+  }
+}

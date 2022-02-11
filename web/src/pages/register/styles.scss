@@ -1,0 +1,108 @@
+.register-container {
+	margin: 0 auto;
+	width: 1024px;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	h1 {
+		margin-bottom: 30px;
+
+		&::selection {
+			background: #29aa44;
+		}
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	input {
+		border-radius: 15px;
+		width: calc(400px - 52px);
+		border: 1px solid #2c3e50;
+		outline: none;
+		font-size: 1.2em;
+		padding: 16px 26px;
+		margin-bottom: 15px;
+		transition: all 0.1s ease-in;
+		background: transparent;
+		color: white;
+
+		&::selection {
+			background: #29aa44;
+		}
+
+		&:focus {
+			border-color: #29aa44;
+		}
+	}
+
+	button {
+		border-radius: 15px;
+		cursor: pointer;
+		width: 400px;
+		height: 50px;
+		font-size: 20px;
+		font-weight: bold;
+		padding: 10px 12px;
+		background: #29aa44;
+		border: none;
+		outline: none;
+		color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: all 0.05s ease-in;
+
+		&::selection {
+			background: #2c3e50;
+		}
+
+		@media (hover: hover) {
+			&:hover {
+				background: #21b941;
+			}
+		}
+		&:active {
+			opacity: 0.8;
+		}
+	}
+
+	.errors {
+		margin-bottom: 15px;
+		color: red;
+		text-align: center;
+
+		&::selection {
+			background: #29aa44;
+		}
+	}
+
+	.register-link {
+		color: #29aa44;
+		font-size: 1.2em;
+		width: fit-content;
+		padding: 0;
+
+		&:hover {
+			text-decoration: underline;
+		}
+
+		&::selection {
+			background: #29aa44;
+			color: white;
+		}
+	}
+
+	.separator {
+		margin: 30px 0;
+
+		&::selection {
+			background: #29aa44;
+		}
+	}
+}
