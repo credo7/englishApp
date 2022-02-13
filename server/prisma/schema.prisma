@@ -8,9 +8,9 @@ datasource db {
 }
 
 model User {
-  id  Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  login String
-  hashedPassword String
-  hashedRefreshToken String
+  login              String  @unique
+  hashedPassword     String
+  hashedRefreshToken String?
 }
