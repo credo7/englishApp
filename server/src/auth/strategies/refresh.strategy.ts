@@ -4,9 +4,9 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 
 type JwtPayload = {
-    sub: string;
-    login: string;
-  };
+  sub: string;
+  login: string;
+};
 
 @Injectable()
 export class RefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
