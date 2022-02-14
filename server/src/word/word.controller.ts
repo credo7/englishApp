@@ -1,5 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import { GetCurrentUserId } from 'src/common/decorators';
+import { Controller, Get, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { WordService } from './word.service';
 
 @Controller('words')
@@ -7,7 +7,8 @@ export class WordController {
   constructor(private wordService: WordService) {}
 
   @Get('get')
-  getWords(@GetCurrentUserId() userId: number) {
-    return this.wordService.getWordsService(userId);
+  getWords(@Req() req: Request) {
+    const userId = req.user['sub'];
+    this.wordService.getWordsService(userId);
   }
 }
