@@ -6,17 +6,25 @@ export class WordService {
   constructor(private prisma: PrismaService) {}
 
   async getWordsService(userId: number) {
-    const words = await this.prisma.user.findUnique({
+    const userWords = await this.prisma.word.findMany({
       where: {
-        id: userId,
-      },
-      select: {
-        words: true,
+        userId: userId,
       },
     });
 
-    console.log('Here it is' + words);
+    const words = userWords.map((el) => el.name);
+    
+    return words;
+  }
 
-    return ['hello', 'cat', 'book'];
+  async addWordService(userId: number, name: string) {
+    const newWord = await this.prisma.word.create({
+      data: {
+        userId,
+        name,
+      },
+    });
+
+    return name;
   }
 }

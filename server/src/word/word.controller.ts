@@ -1,4 +1,4 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { WordService } from './word.service';
 
@@ -9,6 +9,12 @@ export class WordController {
   @Get('get')
   getWords(@Req() req: Request) {
     const userId = req.user['sub'];
-    this.wordService.getWordsService(userId);
+    return this.wordService.getWordsService(userId);
+  }
+
+  @Post('add')
+  addWord(@Req() req: Request, @Body() data) {
+    const userId = req.user['sub'];
+    return this.wordService.addWordService(userId, data['word']);
   }
 }
