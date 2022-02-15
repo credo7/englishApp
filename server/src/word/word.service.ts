@@ -13,17 +13,26 @@ export class WordService {
     });
 
     const words = userWords.map((el) => el.name);
-    
+
     return words;
   }
 
   async addWordService(userId: number, name: string) {
-    const newWord = await this.prisma.word.create({
-      data: {
-        userId,
+    const isRecorded = await this.prisma.word.findFirst({
+      where: {
         name,
+        userId,
       },
     });
+
+    if (!isRecorded) {
+      await this.prisma.word.create({
+        data: {
+          userId,
+          name,
+        },
+      });
+    }
 
     return name;
   }
