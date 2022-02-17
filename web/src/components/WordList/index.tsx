@@ -1,5 +1,5 @@
 import React from "react";
-import { Iprops } from "../types/props";
+import { Iprops } from "../../types/props";
 
 const WordList = ({words}:Iprops) => {
   return (
