@@ -1,8 +1,8 @@
 import "./App.scss";
-import MainPage from "./pages/mainPage";
+import MainPage from "./pages/Main";
 import { Route, Routes } from "react-router-dom";
-import Login from "./pages/login";
-import Register from "./pages/register";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
