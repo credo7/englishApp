@@ -8,14 +8,14 @@ interface ICreateUser {
 }
 
 export const getUserByLogin = (login: string) => {
-	return api.get<ApiUser | null>('/users', {
+	return api.get<ApiUser | null>('auth/user', {
 			params: { login },
 		})
 			.then((res) => res.data);
 };
 
 export const createUser = (login: string, pass: string) => {
-	return api.post<ICreateUser, AxiosResponse<ApiUserCreate>>('/users/create', {
+	return api.post<ICreateUser, AxiosResponse<ApiUserCreate>>('auth/users/create', {
 			login,
 			pass,
 		})

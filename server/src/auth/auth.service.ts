@@ -94,6 +94,20 @@ export class AuthService {
     });
   }
 
+  findOneByLogin(login: string) {
+    const user = this.prisma.user.findUnique({
+      where: {
+        login,
+      },
+    });
+
+    if (!user) {
+      return false;
+    }
+
+    return login;
+  }
+
   hashData(data: String) {
     return bcrypt.hash(data, 10);
   }

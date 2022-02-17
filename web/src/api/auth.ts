@@ -39,7 +39,7 @@ export const signIn = async (
 	setErrors: React.Dispatch<React.SetStateAction<string>>,
 ): Promise<void> => {
 	const r = await axios
-		.post<{ username: string; password: string | null }, AxiosResponse<ApiUserLogin>>("/users/login", {
+		.post<{ username: string; password: string | null }, AxiosResponse<ApiUserLogin>>("/auth/local/signupxx", {
 			username,
 			password,
 		})

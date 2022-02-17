@@ -82,28 +82,25 @@ const Register = () => {
     const hashedPassword = await bcryptjs.hash(password, 10);
     const usersCreateResponse = await createUser(login, hashedPassword);
 
-    if (usersCreateResponse.ok) {
-        try {
-            await signIn(
-                login,
-                password,
-                (usr) => dispatch(setCurrentUser(usr)),
-                setErrorMessage,
-                socket.id,
-                null,
-                null,
-            );
-        } catch (err) {
-            setErrorMessage(`${err}`);
-        }
-    } else {
-        setErrorMessage(usersCreateResponse.msg);
-    }
+    // if (usersCreateResponse.ok) {
+    //     try {
+    //         await signIn(
+    //             login,
+    //             password,
+    //             (usr) => dispatch(setCurrentUser(usr)),
+    //             setErrorMessage,
+    //         );
+    //     } catch (err) {
+    //         setErrorMessage(`${err}`);
+    //     }
+    // } else {
+    //     setErrorMessage(usersCreateResponse.msg);
+    // }
     setIsLoading(false);
 };
 
 
   };
-};
+// };
 
 export default Register;

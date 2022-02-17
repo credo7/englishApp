@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { Tokens } from 'src/auth/types';
@@ -49,5 +51,12 @@ export class AuthController {
     @GetCurrentUser('refreshToken') refreshToken: string,
   ) {
     return this.authService.refreshTokens(userId, refreshToken);
+  }
+
+  @Public()
+  @Get('user')
+  @HttpCode(HttpStatus.OK)
+  getUserByLogin(@Query() { login, expand }) {
+    return this.authService.findOneByLogin(login);
   }
 }

@@ -24,25 +24,25 @@ export const logoutAction = createAsyncThunk(
 	},
 );
 
-export const getCurrentUserAction = createAsyncThunk(
-	'currentUser/getCurrentUser',
-	async (sockId: string, { rejectWithValue }) => {
-		try {
-			const user = await getCurrentUser(sockId);
+// export const getCurrentUserAction = createAsyncThunk(
+// 	'currentUser/getCurrentUser',
+// 	async (sockId: string, { rejectWithValue }) => {
+// 		try {
+// 			const user = await getCurrentUser(sockId);
 
-			if (user) {
-				const { id, login, url_avatar } = user;
-				const newUser = new User();
-				newUser.id = id;
-				newUser.username = login;
-				newUser.urlAvatar = url_avatar;
+// 			if (user) {
+// 				const { id, login, url_avatar } = user;
+// 				const newUser = new User();
+// 				newUser.id = id;
+// 				newUser.username = login;
+// 				newUser.urlAvatar = url_avatar;
 
-				return newUser;
-			}
+// 				return newUser;
+// 			}
 
-			return rejectWithValue('');
-		} catch {
-			return rejectWithValue('');
-		}
-	},
-);
+// 			return rejectWithValue('');
+// 		} catch {
+// 			return rejectWithValue('');
+// 		}
+// 	},
+// );
