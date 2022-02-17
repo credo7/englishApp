@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import WordList from "./WordList";
-import WordSearch from "./WordSearch/WordSearch";
+import WordList from "../../components/WordList";
+import WordSearch from "../../components/WordSearch/WordSearch";
 
 const MainPage: React.FC = () => {
   const [words, setWords] = useState(["Book", "Book", "Book"]);
