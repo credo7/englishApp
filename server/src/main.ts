@@ -1,7 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import cors from 'cors';
+import * as cors from 'cors';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 3001;
@@ -9,10 +9,10 @@ async function bootstrap() {
 
   app.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: '*',
     }),
   );
-  
+
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(PORT, () => console.log('Server started on port:' + PORT));

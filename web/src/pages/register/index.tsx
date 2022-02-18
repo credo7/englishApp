@@ -80,6 +80,7 @@ const Register = () => {
 
     setIsLoading(true);
     const user = await getUserByLogin(login);
+    console.log(user);
 
     if (user) {
       setErrorMessage("User with this login already exists");
@@ -88,8 +89,7 @@ const Register = () => {
       return;
     }
 
-    const hashedPassword = await bcryptjs.hash(password, 10);
-    const usersCreateResponse = await createUser(login, hashedPassword);
+    const usersCreateResponse = await createUser(login, password);
 
     // if (usersCreateResponse.ok) {
     //     try {

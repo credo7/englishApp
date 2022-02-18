@@ -94,8 +94,8 @@ export class AuthService {
     });
   }
 
-  findOneByLogin(login: string) {
-    const user = this.prisma.user.findUnique({
+  async findOneByLogin(login: string) {
+    const user = await this.prisma.user.findUnique({
       where: {
         login,
       },

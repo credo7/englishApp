@@ -49,7 +49,7 @@ const Login = () => {
     password,
   }) => {
     setIsLoading(true);
-    signIn(login, password, setLoginErrors);
+    signIn(login, password, setLoginErrors).finally(() => setIsLoading(false));
   };
 
   return (
