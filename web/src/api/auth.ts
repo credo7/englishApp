@@ -35,11 +35,10 @@ export const getCurrentUser = async (accessToken: string): Promise<User | null> 
 export const signIn = async (
 	username: string,
 	password: string,
-	setUser: (usr: User) => void,
 	setErrors: React.Dispatch<React.SetStateAction<string>>,
 ): Promise<void> => {
-	const r = await axios
-		.post<{ username: string; password: string | null }, AxiosResponse<ApiUserLogin>>("/auth/local/signupxx", {
+	const r = await api
+		.post<{ username: string; password: string | null }, AxiosResponse<ApiUserLogin>>("auth/local/signin", {
 			username,
 			password,
 		})
@@ -49,19 +48,4 @@ export const signIn = async (
 
 			return null;
 		});
-
-	if (!r) return;
-	const { access_token: accessToken } = r;
-
-	if (accessToken) {
-		setToken(accessToken);
-		getCurrentUser(accessToken)
-			.then((usr) => {
-				if (usr) {
-					setUser(usr);
-				} else {
-					removeToken();
-				}
-			});
-	}
 };

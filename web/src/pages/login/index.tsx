@@ -5,6 +5,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import CircleLoading from "../../components/CircleLoading";
 import { Link } from "react-router-dom";
+import { signIn } from "../../api/auth";
 
 const Container = styled.div`
   height: 100%;
@@ -48,39 +49,40 @@ const Login = () => {
     password,
   }) => {
     setIsLoading(true);
+    signIn(login, password, setLoginErrors);
   };
 
   return (
     <Container>
-    <div className="login-container">
-      <h1>Login page</h1>
-      <form onSubmit={handleSubmit(loginSubmit)}>
-        <LoginInput
-          type="text"
-          placeholder="Login"
-          autoComplete="username"
-          {...register("login", { required: true })}
-        />
-        <LoginInput
-          type="password"
-          placeholder="Password"
-          autoComplete="current-password"
-          {...register("password", { required: true })}
-        />
-        <span className="login-errors">{loginErrors}</span>
-        <button type="submit" className="login-btn">
-          {isLoading ? (
-            <CircleLoading bgColor="#fff" width="35px" height="35px" />
-          ) : (
-            "Log in"
-          )}
-        </button>
-      </form>
+      <div className="login-container">
+        <h1>Login page</h1>
+        <form onSubmit={handleSubmit(loginSubmit)}>
+          <LoginInput
+            type="text"
+            placeholder="Login"
+            autoComplete="username"
+            {...register("login", { required: true })}
+          />
+          <LoginInput
+            type="password"
+            placeholder="Password"
+            autoComplete="current-password"
+            {...register("password", { required: true })}
+          />
+          <span className="login-errors">{loginErrors}</span>
+          <button type="submit" className="login-btn">
+            {isLoading ? (
+              <CircleLoading bgColor="#fff" width="35px" height="35px" />
+            ) : (
+              "Log in"
+            )}
+          </button>
+        </form>
 
-      <Link to="/register" className="register-link">
-        Register
-      </Link>
-    </div>
+        <Link to="/register" className="register-link">
+          Register
+        </Link>
+      </div>
     </Container>
   );
 };
