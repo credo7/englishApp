@@ -7,6 +7,13 @@ import { signIn } from "../../api/auth";
 import { useAppDispatch } from "../../hooks/useTypedSelector";
 import CircleLoading from "../../components/CircleLoading";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const Container = styled.div`
+  height: 100%;
+  weight: 100%;
+  background-color: #20222a;
+`;
 
 interface IRegisterForm {
   login: string;
@@ -102,44 +109,46 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
-      <h1>Registration</h1>
+    <Container>
+      <div className="register-container">
+        <h1>Registration</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="Login"
-          autoComplete="username"
-          {...register("login", { required: true })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          autoComplete="new-password"
-          {...register("password", { required: true })}
-        />
-        <input
-          type="password"
-          placeholder="Confirm password"
-          autoComplete="new-password"
-          {...register("passwordConfirm", { required: true })}
-        />
-        {errorMessage && <span className="errors">{errorMessage}</span>}
-        <button type="submit" className="register-btn">
-          {isLoading ? (
-            <CircleLoading bgColor="#fff" width="35px" height="35px" />
-          ) : (
-            "Register"
-          )}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="text"
+            placeholder="Login"
+            autoComplete="username"
+            {...register("login", { required: true })}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            autoComplete="new-password"
+            {...register("password", { required: true })}
+          />
+          <input
+            type="password"
+            placeholder="Confirm password"
+            autoComplete="new-password"
+            {...register("passwordConfirm", { required: true })}
+          />
+          {errorMessage && <span className="errors">{errorMessage}</span>}
+          <button type="submit" className="register-btn">
+            {isLoading ? (
+              <CircleLoading bgColor="#fff" width="35px" height="35px" />
+            ) : (
+              "Register"
+            )}
+          </button>
+        </form>
 
-      <span className="separator">Or</span>
+        <span className="separator">Or</span>
 
-      <Link className="register-link" to="/login">
-        Sign in
-      </Link>
-    </div>
+        <Link className="register-link" to="/login">
+          Sign in
+        </Link>
+      </div>
+    </Container>
   );
 };
 

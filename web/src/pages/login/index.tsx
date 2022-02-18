@@ -6,6 +6,12 @@ import styled from "styled-components";
 import CircleLoading from "../../components/CircleLoading";
 import { Link } from "react-router-dom";
 
+const Container = styled.div`
+  height: 100%;
+  weight: 100%;
+  background-color: #20222a;
+`;
+
 const LoginInput = styled.input`
   border-radius: 15px;
   width: calc(400px - 52px);
@@ -45,6 +51,7 @@ const Login = () => {
   };
 
   return (
+    <Container>
     <div className="login-container">
       <h1>Login page</h1>
       <form onSubmit={handleSubmit(loginSubmit)}>
@@ -70,10 +77,11 @@ const Login = () => {
         </button>
       </form>
 
-      {/* <Link to="/register" className="register-link">
+      <Link to="/register" className="register-link">
         Register
-      </Link> */}
+      </Link>
     </div>
+    </Container>
   );
 };
 
