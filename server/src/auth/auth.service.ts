@@ -31,14 +31,15 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new ForbiddenException('Acces Denied');
+    if (!user)
+      throw new ForbiddenException('User with this login is not found');
 
     const passwordMatches = await bcrypt.compare(
       dto.password,
       user.hashedPassword,
     );
 
-    if (!passwordMatches) throw new ForbiddenException('Acces Denied');
+    if (!passwordMatches) throw new ForbiddenException('Invalid password');
 
     const tokens = await this.getTokens(user.id, user.login);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
@@ -75,7 +76,7 @@ export class AuthService {
       refreshToken,
     );
 
-    if (!refreshTokensMatches) throw new ForbiddenException('Access Denied');
+    if (!refreshTokensMatches) throw new ForbiddenException('Invalid refresh token');
 
     const tokens = await this.getTokens(user.id, user.login);
     await this.updateRefreshToken(user.id, tokens.refresh_token);

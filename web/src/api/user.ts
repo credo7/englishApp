@@ -1,5 +1,4 @@
 import { AxiosResponse } from "axios";
-import { ApiUser, ApiUserCreate } from "../models/ApiTypes";
 import { api } from "./api";
 
 interface ICreateUser {
@@ -9,7 +8,7 @@ interface ICreateUser {
 
 export const getUserByLogin = (login: string) => {
   return api
-    .get<ApiUser | null>("auth/user", {
+    .get<any | null>("auth/user", {
       params: { login },
     })
     .then((res) => res.data);
@@ -17,7 +16,7 @@ export const getUserByLogin = (login: string) => {
 
 export const createUser = (login: string, pass: string) => {
   return api
-    .post<ICreateUser, AxiosResponse<ApiUserCreate>>("auth/local/signup", {
+    .post<ICreateUser, AxiosResponse<any>>("auth/local/signup", {
       login,
       password: pass,
     })

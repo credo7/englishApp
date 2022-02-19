@@ -91,20 +91,20 @@ const Register = () => {
 
     const usersCreateResponse = await createUser(login, password);
 
-    // if (usersCreateResponse.ok) {
-    //     try {
-    //         await signIn(
-    //             login,
-    //             password,
-    //             (usr) => dispatch(setCurrentUser(usr)),
-    //             setErrorMessage,
-    //         );
-    //     } catch (err) {
-    //         setErrorMessage(`${err}`);
-    //     }
-    // } else {
-    //     setErrorMessage(usersCreateResponse.msg);
-    // }
+    if (usersCreateResponse.ok) {
+        try {
+            await signIn(
+                login,
+                password,
+                setErrorMessage,
+            );
+        } catch (err) {
+            setErrorMessage(`${err}`);
+        }
+    } else {
+        setErrorMessage(usersCreateResponse.msg);
+    }
+
     setIsLoading(false);
   };
 
