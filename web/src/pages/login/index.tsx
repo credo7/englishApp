@@ -88,3 +88,7 @@ const Login = () => {
 };
 
 export default Login;
+function async(arg0: {}) {
+  throw new Error("Function not implemented.");
+}
+
