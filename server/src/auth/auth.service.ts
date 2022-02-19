@@ -76,7 +76,8 @@ export class AuthService {
       refreshToken,
     );
 
-    if (!refreshTokensMatches) throw new ForbiddenException('Invalid refresh token');
+    if (!refreshTokensMatches)
+      throw new ForbiddenException('Invalid refresh token');
 
     const tokens = await this.getTokens(user.id, user.login);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
@@ -122,8 +123,7 @@ export class AuthService {
         },
         {
           secret: 'accessTokenSecret',
-          expiresIn: 15,
-          // * 60
+          expiresIn: 15 * 60,
         },
       ),
       this.jwtService.signAsync(
