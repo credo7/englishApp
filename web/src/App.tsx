@@ -1,7 +1,7 @@
-import Main from "./pages/mainPage";
+import Main from "./pages/Main";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import Register from "./pages/register";
+import Register from "./pages/Register";
 
 function App() {
   return (

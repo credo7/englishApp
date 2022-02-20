@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { setAccessToken, setRefreshToken } from "../utils/token";
 import { api } from "./api";
 

@@ -6,7 +6,7 @@ import { createUser, getUserByLogin } from "../../api/user";
 import { signIn } from "../../api/auth";
 import { useAppDispatch } from "../../hooks/useTypedSelector";
 import CircleLoading from "../../components/CircleLoading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -30,6 +30,8 @@ const Register = () => {
     setError,
     formState: { errors },
   } = useForm<IRegisterForm>();
+
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -80,7 +82,6 @@ const Register = () => {
 
     setIsLoading(true);
     const user = await getUserByLogin(login);
-    console.log(user);
 
     if (user) {
       setErrorMessage("User with this login already exists");
@@ -91,18 +92,16 @@ const Register = () => {
 
     const usersCreateResponse = await createUser(login, password);
 
-    if (usersCreateResponse.ok) {
-        try {
-            await signIn(
-                login,
-                password,
-                setErrorMessage,
-            );
-        } catch (err) {
-            setErrorMessage(`${err}`);
-        }
+    if (usersCreateResponse.access_token) {
+      try {
+        await signIn(login, password, setErrorMessage).finally(() => {
+          navigate("/");
+        });
+      } catch (err) {
+        setErrorMessage(`${err}`);
+      }
     } else {
-        setErrorMessage(usersCreateResponse.msg);
+      setErrorMessage(usersCreateResponse.msg);
     }
 
     setIsLoading(false);

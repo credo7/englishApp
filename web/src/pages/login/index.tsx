@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import CircleLoading from "../../components/CircleLoading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../../api/auth";
 
 const Container = styled.div`
@@ -43,13 +43,17 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loginErrors, setLoginErrors] = useState<string>("");
+  const navigate = useNavigate();
 
   const loginSubmit: SubmitHandler<FieldValues> = async ({
     login,
     password,
   }) => {
     setIsLoading(true);
-    signIn(login, password, setLoginErrors).finally(() => setIsLoading(false));
+    signIn(login, password, setLoginErrors).finally(() => {
+      setIsLoading(false);
+      navigate("/");
+    });
   };
 
   return (
@@ -91,4 +95,3 @@ export default Login;
 function async(arg0: {}) {
   throw new Error("Function not implemented.");
 }
-

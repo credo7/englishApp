@@ -20,5 +20,5 @@ export const createUser = (login: string, pass: string) => {
       login,
       password: pass,
     })
-    .then((res) => res.data);
+    .then((res) => res.data)
 };
