@@ -1,4 +1,5 @@
 import React from "react";
+import { addWord } from "../../api/words";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { capitalizeFirstLetter } from "../functions";
 
@@ -10,6 +11,7 @@ const WordInformation = ({ labelWord, setWords, setLabelWord }: any) => {
     (e: React.MouseEvent<HTMLElement>) => {
       if (labelWord !== "") {
         setWords((prev: string[]) => [...prev, labelWord]);
+        addWord(labelWord.toLowerCase());
       }
       setLabelWord("");
     };

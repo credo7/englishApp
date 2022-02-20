@@ -1,10 +1,20 @@
 import "./index.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WordList from "../../components/WordList";
 import WordSearch from "../../components/WordSearch/WordSearch";
+import { getWords } from "../../api/words";
 
 const Main: React.FC = () => {
   const [words, setWords] = useState(["Book", "Book", "Book"]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const words = await getWords();
+      console.log(words)
+      setWords(words);
+    }
+    fetchData();
+  }, []);
 
   return (
     <>

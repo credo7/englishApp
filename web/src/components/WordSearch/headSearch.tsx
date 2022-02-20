@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-// import getWordData from "../../api/word-search";
 import { fetchWord } from "../../store/action-creators/word";
 
 const Form = styled.form`
