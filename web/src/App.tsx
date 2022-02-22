@@ -6,9 +6,17 @@ import Register from "./pages/Register";
 function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/" element={<Main />} />
+      <AuthRoute exact path="/login">
+        <Login />
+      </AuthRoute>
+
+      <AuthRoute exact path="/register">
+        <Register />
+      </AuthRoute>
+
+      <PrivateRoute exact path="/">
+        <Main />
+      </PrivateRoute>
     </Routes>
   );
 }
