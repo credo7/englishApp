@@ -1,12 +1,13 @@
 import axios from "axios";
 import { wordStructure } from "../../types/word";
+import { invisible, visible } from "./wordInformationPanel";
 
 const wordChange = (data: wordStructure) => {
   return { type: "CHANGE_WORD", payload: data };
 };
 
 export const fetchWord = (word: string) => (dispatch: any) => {
-  console.log("in FetchWord");
+  if (word == "") return;
   axios
     .get(
       "https://api.dictionaryapi.dev/api/v2/entries/en/" + word.toLowerCase()
@@ -26,7 +27,9 @@ export const fetchWord = (word: string) => (dispatch: any) => {
         })
       );
     })
+    .then(() => dispatch(visible()))
     .catch((e) => {
-      alert('Word not found or error with API');
+      dispatch(invisible());
+      alert("Word not found or error with API");
     });
 };

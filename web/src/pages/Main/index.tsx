@@ -5,12 +5,11 @@ import WordSearch from "../../components/WordSearch/WordSearch";
 import { getWords } from "../../api/words";
 
 const Main: React.FC = () => {
-  const [words, setWords] = useState(["Book", "Book", "Book"]);
+  const [words, setWords] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const words = await getWords();
-      console.log(words)
       setWords(words);
     }
     fetchData();

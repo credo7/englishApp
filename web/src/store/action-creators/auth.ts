@@ -1,11 +1,11 @@
 export const authorized = () => {
   return {
-    type: "TRUE",
+    type: "AUTH_TRUE",
   };
 };
 
 export const unauthorized = () => {
-    return {
-        type: 'FALSE'
-    }
-}
+  return {
+    type: "AUTH_FALSE",
+  };
+};

@@ -2,10 +2,10 @@ import { authAction } from "../../types/auth";
 
 export const authReducer = (state = false, action: authAction) => {
   switch (action.type) {
-    case "TRUE": {
+    case "AUTH_TRUE": {
       return true;
     }
-    case "FALSE": {
+    case "AUTH_FALSE": {
       return false;
     }
     default:
