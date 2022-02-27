@@ -6,6 +6,7 @@ const wordChange = (data: wordStructure) => {
 };
 
 export const fetchWord = (word: string) => (dispatch: any) => {
+  console.log("in FetchWord");
   axios
     .get(
       "https://api.dictionaryapi.dev/api/v2/entries/en/" + word.toLowerCase()
@@ -13,12 +14,19 @@ export const fetchWord = (word: string) => (dispatch: any) => {
     .then((response) => {
       dispatch(
         wordChange({
-          word: response.data[0].word,
-          transcription: response.data[0].phonetic,
-          meaning: response.data[0].meanings[0].definitions[0].definition,
-          example: response.data[0].meanings[0].definitions[0].example,
-          audioURL: response.data[0].phonetics[0].audio,
+          word: response.data[0].word || "Word not found",
+          transcription: response.data[0].phonetic || "Transcription not found",
+          meaning:
+            response.data[0].meanings[0].definitions[0].definition ||
+            "Meaning not found",
+          example:
+            response.data[0].meanings[0].definitions[0].example ||
+            "Example not found",
+          audioURL: response.data[0].phonetics[0].audio || "error",
         })
       );
+    })
+    .catch((e) => {
+      alert('Word not found or error with API');
     });
 };

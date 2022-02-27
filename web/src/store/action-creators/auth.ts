@@ -1,5 +1,11 @@
-export const authToggle = () => {
+export const authorized = () => {
   return {
-    type: "TOGGLE",
+    type: "TRUE",
   };
 };
+
+export const unauthorized = () => {
+    return {
+        type: 'FALSE'
+    }
+}

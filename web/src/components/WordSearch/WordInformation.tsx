@@ -44,6 +44,3 @@ const WordInformation = ({ labelWord, setWords, setLabelWord }: any) => {
 };
 
 export default WordInformation;
-function fetchWord(labelWord: any) {
-  throw new Error("Function not implemented.");
-}

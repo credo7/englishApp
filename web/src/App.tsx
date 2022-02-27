@@ -2,9 +2,11 @@ import Main from "./pages/Main";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/reducers";
 
 function App() {
-  const isAuth = true;
+  const isAuth = useSelector((state: RootState) => state.isAuth);
   if (isAuth) {
     return (
       <Routes>

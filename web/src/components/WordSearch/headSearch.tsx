@@ -11,7 +11,12 @@ const Form = styled.form`
   align-items: baseline;
 `;
 
-const HeadSearch = ({ setWords, setIsSearchOn, labelWord, setLabelWord }: any): any => {
+const HeadSearch = ({
+  setWords,
+  setIsSearchOn,
+  labelWord,
+  setLabelWord,
+}: any): any => {
   const { register, watch, setValue } = useForm();
 
   const currentWord = watch("word");
@@ -24,10 +29,10 @@ const HeadSearch = ({ setWords, setIsSearchOn, labelWord, setLabelWord }: any): 
       setIsSearchOn(true);
     };
 
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchWord(labelWord);
+    dispatch(fetchWord(labelWord));
   }, [labelWord]);
 
   return (
@@ -41,4 +46,3 @@ const HeadSearch = ({ setWords, setIsSearchOn, labelWord, setLabelWord }: any): 
 };
 
 export default HeadSearch;
-

@@ -22,7 +22,6 @@ export const signIn = async (
     .then((res) => res.data)
     .catch(() => {
       setErrors("Login Error");
-
       return null;
     });
 

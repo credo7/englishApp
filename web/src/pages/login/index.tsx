@@ -6,6 +6,8 @@ import styled from "styled-components";
 import CircleLoading from "../../components/CircleLoading";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../../api/auth";
+import { useDispatch } from "react-redux";
+import { authorized } from "../../store/action-creators/auth";
 
 const Container = styled.div`
   height: 100%;
@@ -44,6 +46,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loginErrors, setLoginErrors] = useState<string>("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginSubmit: SubmitHandler<FieldValues> = async ({
     login,
@@ -52,6 +55,7 @@ const Login = () => {
     setIsLoading(true);
     signIn(login, password, setLoginErrors).finally(() => {
       setIsLoading(false);
+      dispatch(authorized())
       navigate("/");
     });
   };
@@ -92,6 +96,3 @@ const Login = () => {
 };
 
 export default Login;
-function async(arg0: {}) {
-  throw new Error("Function not implemented.");
-}
