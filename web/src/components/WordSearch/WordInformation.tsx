@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { addWord } from "../../api/words";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { RootState } from "../../store/reducers";
 import { capitalizeFirstLetter } from "../functions";
 
 const WordInformation = ({ labelWord, setWords, setLabelWord }: any) => {
-  const state = useTypedSelector((state) => state.word);
+  const state = useSelector((state: RootState) => state.currentWord);
 
   const onClickHandler =
     (labelWord: string, setWords: Function, setLabelWord: Function) =>
@@ -43,3 +44,6 @@ const WordInformation = ({ labelWord, setWords, setLabelWord }: any) => {
 };
 
 export default WordInformation;
+function fetchWord(labelWord: any) {
+  throw new Error("Function not implemented.");
+}

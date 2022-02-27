@@ -18,11 +18,8 @@ const HeadSearch = ({ setWords, setIsSearchOn, labelWord, setLabelWord }: any): 
 
   const addWord =
     (setWords: Function) => (e: React.ChangeEvent<HTMLFormElement>) => {
-      const wordWithTrim = currentWord
-        .trim()
-        .replace(/^\w/, (c: string) => c.toUpperCase());
       e.preventDefault();
-      setLabelWord(wordWithTrim);
+      setLabelWord(currentWord.trim());
       setValue("word", "");
       setIsSearchOn(true);
     };
@@ -30,7 +27,7 @@ const HeadSearch = ({ setWords, setIsSearchOn, labelWord, setLabelWord }: any): 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchWord(labelWord));
+    fetchWord(labelWord);
   }, [labelWord]);
 
   return (
@@ -44,3 +41,4 @@ const HeadSearch = ({ setWords, setIsSearchOn, labelWord, setLabelWord }: any): 
 };
 
 export default HeadSearch;
+
