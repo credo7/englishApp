@@ -123,7 +123,7 @@ export class AuthService {
         },
         {
           secret: 'accessTokenSecret',
-          expiresIn: 15 * 60,
+          expiresIn: 15,// * 60,
         },
       ),
       this.jwtService.signAsync(

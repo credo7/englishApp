@@ -56,7 +56,7 @@ export class AuthController {
   @Public()
   @Get('user')
   @HttpCode(HttpStatus.OK)
-  getUserByLogin(@Query() { login, expand }) {
+  getUserByLogin(@Query() { login }) {
     return this.authService.findOneByLogin(login);
   }
 }

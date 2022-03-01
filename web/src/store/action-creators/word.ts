@@ -7,7 +7,7 @@ const wordChange = (data: wordStructure) => {
 };
 
 export const fetchWord = (word: string) => (dispatch: any) => {
-  if (word == "") return;
+  if (word === "") return;
   axios
     .get(
       "https://api.dictionaryapi.dev/api/v2/entries/en/" + word.toLowerCase()
