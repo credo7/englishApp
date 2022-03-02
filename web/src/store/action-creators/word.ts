@@ -22,8 +22,8 @@ export const fetchWord = (word: string) => (dispatch: any) => {
             "Meaning not found",
           example:
             response.data[0].meanings[0].definitions[0].example ||
-            "Example not found",
-          audioURL: response.data[0].phonetics[0].audio || "error",
+            null,
+          audioURL: response.data[0].phonetics[0].audio || null,
         })
       );
     })
