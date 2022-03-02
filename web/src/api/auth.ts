@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { setAccessToken, setRefreshToken } from "../utils/token";
+import { setAccessToken } from "../utils/token";
 import { api } from "./api";
 
 export const logout = () => {
@@ -27,10 +27,11 @@ export const signIn = async (
 
   if (!r) return;
 
-  const { access_token: accessToken, refresh_token: refreshToken } = r;
+  const { access_token: accessToken } = r;
 
-  if (accessToken && refreshToken) {
+  if (accessToken) {
     setAccessToken(accessToken);
-    setRefreshToken(refreshToken);
   }
+
+
 };

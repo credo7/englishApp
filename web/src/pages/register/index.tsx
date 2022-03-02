@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import bcryptjs from "bcryptjs";
 import "./styles.scss";
 import { createUser, getUserByLogin } from "../../api/user";
 import { signIn } from "../../api/auth";
@@ -8,6 +7,7 @@ import { useAppDispatch } from "../../hooks/useTypedSelector";
 import CircleLoading from "../../components/CircleLoading";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { authorized } from "../../store/action-creators/auth";
 
 const Container = styled.div`
   height: 100%;
@@ -95,6 +95,8 @@ const Register = () => {
     if (usersCreateResponse.access_token) {
       try {
         await signIn(login, password, setErrorMessage).finally(() => {
+          setIsLoading(false);
+          dispatch(authorized())
           navigate("/");
         });
       } catch (err) {
@@ -103,8 +105,6 @@ const Register = () => {
     } else {
       setErrorMessage(usersCreateResponse.msg);
     }
-
-    setIsLoading(false);
   };
 
   return (

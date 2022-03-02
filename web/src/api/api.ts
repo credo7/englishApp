@@ -6,7 +6,6 @@ import {
   getRefreshToken,
   getToken,
   setAccessToken,
-  setRefreshToken,
 } from "../utils/token";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
@@ -44,7 +43,6 @@ api.interceptors.response.use(
           withCredentials: true,
         });
         setAccessToken(response.data.accessToken);
-        setRefreshToken(response.data.refreshToken);
         return api.request(originalRequest);
       } catch (e) {
         store.dispatch(unauthorized());

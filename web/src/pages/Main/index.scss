@@ -91,6 +91,7 @@
       font-style: italic;
       border-left: 5px solid #ae9cff;
       padding-left: 20px;
+      padding-right: 20px;
       margin-top: 20px;
       border-radius: 3px;
     }
@@ -110,11 +111,14 @@
     }
   }
   .add-button {
+    margin-top: auto;
     margin-left: auto;
     border-radius: 5px;
     background-color: #f2f4f6;
     border-radius: 8px;
     padding: 8px 0;
     font-size: 22px;
+    max-width: 148px;
+    max-height: 29px;
   }
 }

@@ -6,9 +6,9 @@ import {
   HttpStatus,
   Post,
   Query,
+  Res,
   UseGuards,
 } from '@nestjs/common';
-import { Tokens } from 'src/auth/types';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { AccessTokenGuard, RefreshTokenGuard } from 'src/common/guards';
@@ -17,6 +17,7 @@ import {
   GetCurrentUserId,
   Public,
 } from 'src/common/decorators';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -25,15 +26,25 @@ export class AuthController {
   @Public()
   @Post('local/signup')
   @HttpCode(HttpStatus.CREATED)
-  signupLocal(@Body() dto: AuthDto): Promise<Tokens> {
-    return this.authService.signupLocal(dto);
+  async signupLocal(
+    @Body() dto: AuthDto,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<any> {
+    const tokens = await this.authService.signupLocal(dto);
+    response.cookie('refreshToken', tokens.refresh_token, { httpOnly: true });
+    return { access_token: tokens.access_token };
   }
 
   @Public()
   @Post('local/signin')
   @HttpCode(HttpStatus.OK)
-  signinLocal(@Body() dto: AuthDto): Promise<Tokens> {
-    return this.authService.signinLocal(dto);
+  async signinLocal(
+    @Body() dto: AuthDto,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<any> {
+    const tokens = await this.authService.signinLocal(dto);
+    response.cookie('refreshToken', tokens.refresh_token, { httpOnly: true });
+    return { access_token: tokens.access_token };
   }
 
   @UseGuards(AccessTokenGuard)
@@ -46,11 +57,14 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   @HttpCode(HttpStatus.OK)
-  refreshTokens(
+  async refreshTokens(
     @GetCurrentUserId() userId: number,
     @GetCurrentUser('refreshToken') refreshToken: string,
+    @Res({ passthrough: true }) response: Response,
   ) {
-    return this.authService.refreshTokens(userId, refreshToken);
+    const tokens = await this.authService.refreshTokens(userId, refreshToken);
+    response.cookie('refreshToken', tokens.refresh_token, { httpOnly: true });
+    return { access_token: tokens.access_token };
   }
 
   @Public()
