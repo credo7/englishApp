@@ -1,7 +1,7 @@
 import axios from "axios";
 import { wordStructure } from "../../types/word";
 import { modalActivate } from "./modal";
-import { invisible, visible } from "./wordInformationPanel";
+import { invisible, visible } from "./wordPanel";
 
 const wordChange = (data: wordStructure) => {
   return { type: "CHANGE_WORD", payload: data };
