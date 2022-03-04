@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Post,
   Query,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -17,7 +18,7 @@ import {
   GetCurrentUserId,
   Public,
 } from 'src/common/decorators';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -31,7 +32,10 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<any> {
     const tokens = await this.authService.signupLocal(dto);
-    response.cookie('refreshToken', tokens.refresh_token, { httpOnly: true });
+    response.cookie('refresh_token', tokens.refresh_token, {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
     return { access_token: tokens.access_token };
   }
 
@@ -43,7 +47,10 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<any> {
     const tokens = await this.authService.signinLocal(dto);
-    response.cookie('refreshToken', tokens.refresh_token, { httpOnly: true });
+    response.cookie('refreshToken', tokens.refresh_token, {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
     return { access_token: tokens.access_token };
   }
 
@@ -54,17 +61,33 @@ export class AuthController {
     return this.authService.logout(userId);
   }
 
+  // @Public()
+  // @UseGuards(RefreshTokenGuard)
+  // @Get('refresh')
+  // @HttpCode(HttpStatus.OK)
+  // async refreshTokens(
+  //   @GetCurrentUserId() userId: number,
+  //   @GetCurrentUser('refreshToken') refreshToken: string,
+  //   @Res({ passthrough: true }) response: Response,
+  // ) {
+  //   const tokens = await this.authService.refreshTokens(userId, refreshToken);
+  //   response.cookie('refreshToken', tokens.refresh_token, {
+  //     maxAge: 30 * 24 * 60 * 60 * 1000,
+  //     httpOnly: true,
+  //   });
+  //   return { access_token: tokens.access_token };
+  // }
+
+  @Public()
   @UseGuards(RefreshTokenGuard)
-  @Get('refresh')
+  @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  async refreshTokens(
-    @GetCurrentUserId() userId: number,
-    @GetCurrentUser('refreshToken') refreshToken: string,
-    @Res({ passthrough: true }) response: Response,
-  ) {
-    const tokens = await this.authService.refreshTokens(userId, refreshToken);
-    response.cookie('refreshToken', tokens.refresh_token, { httpOnly: true });
-    return { access_token: tokens.access_token };
+  refreshTokens(
+    @GetCurrentUser('sub') userId: number,
+    @Req() request: Request,
+  ): Promise<any> {
+    const refreshToken = request?.cookies['refreshToken'];
+    return this.authService.refreshTokens(userId, refreshToken);
   }
 
   @Public()

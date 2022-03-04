@@ -86,6 +86,7 @@ export class AuthService {
 
   async updateRefreshToken(userId: number, refreshToken: string) {
     const hash = await this.hashData(refreshToken);
+    console.log(refreshToken);
     await this.prisma.user.update({
       where: {
         id: userId,
@@ -110,7 +111,7 @@ export class AuthService {
     return login;
   }
 
-  hashData(data: String) {
+  hashData(data: String): string {
     return bcrypt.hash(data, 10);
   }
 
@@ -122,8 +123,8 @@ export class AuthService {
           login,
         },
         {
-          secret: 'accessTokenSecret',
-          expiresIn: 15,// * 60,
+          secret: 'jwt',
+          expiresIn: 15 * 60,
         },
       ),
       this.jwtService.signAsync(
@@ -131,7 +132,7 @@ export class AuthService {
           sub: userId,
           login,
         },
-        { secret: 'refreshTokenSecret', expiresIn: 60 * 60 * 24 * 7 },
+        { secret: 'jwt-refresh', expiresIn: 60 * 60 * 24 * 7 },
       ),
     ]);
 
