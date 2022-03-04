@@ -1,7 +1,7 @@
-import './index.scss'
-import { Iprops } from "../../types/props";
+import "./index.scss";
+import { WordProps } from "../../types/props";
 
-const WordList = ({words}:Iprops) => {
+const WordList = ({ words }: WordProps) => {
   return (
     <>
       <h1>Words:</h1>

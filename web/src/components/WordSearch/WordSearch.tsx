@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "../../store/reducers";
-import { IpropsSearch } from "../../types/props";
+import { SearchProps } from "../../types/props";
 import HeadSearch from "./headSearch";
 import WordInformation from "./WordInformation";
 
@@ -17,7 +17,7 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-const WordSearch = ({ setWords }: IpropsSearch) => {
+const WordSearch = ({ setWords }: SearchProps) => {
   const [isSearchOn, setIsSearchOn] = useState(false);
   const [labelWord, setLabelWord] = useState("");
 

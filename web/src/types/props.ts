@@ -1,7 +1,7 @@
-export interface Iprops {
+export interface WordProps {
   words: String[];
 }
 
-export interface IpropsSearch {
+export interface SearchProps {
   setWords: Function;
 }
