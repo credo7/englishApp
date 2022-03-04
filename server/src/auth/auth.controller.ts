@@ -61,23 +61,6 @@ export class AuthController {
     return this.authService.logout(userId);
   }
 
-  // @Public()
-  // @UseGuards(RefreshTokenGuard)
-  // @Get('refresh')
-  // @HttpCode(HttpStatus.OK)
-  // async refreshTokens(
-  //   @GetCurrentUserId() userId: number,
-  //   @GetCurrentUser('refreshToken') refreshToken: string,
-  //   @Res({ passthrough: true }) response: Response,
-  // ) {
-  //   const tokens = await this.authService.refreshTokens(userId, refreshToken);
-  //   response.cookie('refreshToken', tokens.refresh_token, {
-  //     maxAge: 30 * 24 * 60 * 60 * 1000,
-  //     httpOnly: true,
-  //   });
-  //   return { access_token: tokens.access_token };
-  // }
-
   @Public()
   @UseGuards(RefreshTokenGuard)
   @Post('refresh')
