@@ -4,7 +4,7 @@ import { addWord } from "../../api/words";
 import { RootState } from "../../store/reducers";
 import { capitalizeFirstLetter } from "../functions";
 
-const WordInformation = ({ labelWord, setWords, setLabelWord }: any) => {
+const WordData = ({ labelWord, setWords, setLabelWord }: any) => {
   const state = useSelector((state: RootState) => state.currentWord);
 
   const onClickHandler =
@@ -53,4 +53,4 @@ const WordInformation = ({ labelWord, setWords, setLabelWord }: any) => {
   );
 };
 
-export default WordInformation;
+export default WordData;

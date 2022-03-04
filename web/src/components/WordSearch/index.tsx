@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { RootState } from "../../store/reducers";
 import { SearchProps } from "../../types/props";
 import Search from "./Search";
-import WordInformation from "./WordInformation";
+import WordData from "./WordData";
 
 const Container = styled.div`
   margin-top: 50px;
@@ -26,7 +26,7 @@ const WordSearch = ({ setWords }: SearchProps) => {
     <Container>
       <Search labelWord={labelWord} setLabelWord={setLabelWord} />
       {isVisible && (
-        <WordInformation
+        <WordData
           labelWord={labelWord}
           setLabelWord={setLabelWord}
           setWords={setWords}
