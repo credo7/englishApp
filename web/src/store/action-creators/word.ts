@@ -1,5 +1,6 @@
 import axios from "axios";
 import { wordStructure } from "../../types/word";
+import { modalActivate } from "./modal";
 import { invisible, visible } from "./wordInformationPanel";
 
 const wordChange = (data: wordStructure) => {
@@ -20,9 +21,7 @@ export const fetchWord = (word: string) => (dispatch: any) => {
           meaning:
             response.data[0].meanings[0].definitions[0].definition ||
             "Meaning not found",
-          example:
-            response.data[0].meanings[0].definitions[0].example ||
-            null,
+          example: response.data[0].meanings[0].definitions[0].example || null,
           audioURL: response.data[0].phonetics[0].audio || null,
         })
       );
@@ -30,6 +29,6 @@ export const fetchWord = (word: string) => (dispatch: any) => {
     .then(() => dispatch(visible()))
     .catch((e) => {
       dispatch(invisible());
-      alert("Word not found or error with API");
+      dispatch(modalActivate("Word not found or error with API"));
     });
 };

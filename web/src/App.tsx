@@ -7,6 +7,7 @@ import { RootState } from "./store/reducers";
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.isAuth);
+
   if (isAuth) {
     return (
       <Routes>

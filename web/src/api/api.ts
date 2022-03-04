@@ -1,12 +1,9 @@
 import axios from "axios";
 import { store } from "../store";
 import { unauthorized } from "../store/action-creators/auth";
+import { modalActivate } from "../store/action-creators/modal";
 import { AuthResponse } from "../types/auth";
-import {
-  getRefreshToken,
-  getToken,
-  setAccessToken,
-} from "../utils/token";
+import { getRefreshToken, getToken, setAccessToken } from "../utils/token";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
@@ -39,14 +36,14 @@ api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
+        const response = await axios.get<AuthResponse>(`${API_URL}/auth/refresh`, {
           withCredentials: true,
         });
         setAccessToken(response.data.accessToken);
         return api.request(originalRequest);
       } catch (e) {
-        store.dispatch(unauthorized());
-        console.log("НЕ АВТОРИЗОВАН");
+		store.dispatch(unauthorized());
+        store.dispatch(modalActivate("Oops.. User not authorized"));
       }
     }
     throw error;

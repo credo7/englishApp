@@ -36,11 +36,6 @@ const LoginInput = styled.input`
   }
 `;
 
-interface ILoginInput {
-  login: string;
-  password: string;
-}
-
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,7 +50,7 @@ const Login = () => {
     setIsLoading(true);
     signIn(login, password, setLoginErrors).finally(() => {
       setIsLoading(false);
-      dispatch(authorized())
+      dispatch(authorized());
       navigate("/");
     });
   };
