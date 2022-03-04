@@ -65,12 +65,18 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  refreshTokens(
+  async refreshTokens(
     @GetCurrentUser('sub') userId: number,
     @Req() request: Request,
-  ): Promise<any> {
-    const refreshToken = request?.cookies['refreshToken'];
-    return this.authService.refreshTokens(userId, refreshToken);
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<string> {
+    const oldRefreshToken = request?.cookies['refreshToken'];
+    const tokens = await this.authService.refreshTokens(userId, oldRefreshToken);
+    response.cookie('refresh_token', tokens.refresh_token, {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
+    return tokens.access_token
   }
 
   @Public()
