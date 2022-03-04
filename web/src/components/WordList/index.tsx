@@ -1,4 +1,4 @@
-import React from "react";
+import './index.scss'
 import { Iprops } from "../../types/props";
 
 const WordList = ({words}:Iprops) => {
