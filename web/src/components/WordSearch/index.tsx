@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "../../store/reducers";
 import { SearchProps } from "../../types/props";
-import HeadSearch from "./headSearch";
+import Search from "./Search";
 import WordInformation from "./WordInformation";
 
 const Container = styled.div`
@@ -18,20 +18,13 @@ const Container = styled.div`
 `;
 
 const WordSearch = ({ setWords }: SearchProps) => {
-  const [isSearchOn, setIsSearchOn] = useState(false);
   const [labelWord, setLabelWord] = useState("");
-
-  const dispatch = useDispatch;
 
   const isVisible = useSelector((state: RootState) => state.isVisibleWordPanel);
 
   return (
     <Container>
-      <HeadSearch
-        labelWord={labelWord}
-        setLabelWord={setLabelWord}
-        setIsSearchOn={setIsSearchOn}
-      />
+      <Search labelWord={labelWord} setLabelWord={setLabelWord} />
       {isVisible && (
         <WordInformation
           labelWord={labelWord}

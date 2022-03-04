@@ -1,7 +1,7 @@
 import "./index.scss";
 import React, { useEffect, useState } from "react";
 import WordList from "../../components/WordList";
-import WordSearch from "../../components/WordSearch/WordSearch";
+import Search from "../../components/WordSearch";
 import { getWords } from "../../api/words";
 
 const Main: React.FC = () => {
@@ -18,10 +18,10 @@ const Main: React.FC = () => {
   return (
     <>
       <div className="main">
-        <div className="word-list-container">
-          <WordSearch setWords={setWords} />
+        <div className="word-search-container">
+          <Search setWords={setWords} />
         </div>
-        <div className="word-list-container2">
+        <div className="word-list-container">
           <WordList words={words} />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -11,9 +11,8 @@ const Form = styled.form`
   align-items: baseline;
 `;
 
-const HeadSearch = ({
+const Search = ({
   setWords,
-  setIsSearchOn,
   labelWord,
   setLabelWord,
 }: any): any => {
@@ -26,10 +25,9 @@ const HeadSearch = ({
       e.preventDefault();
       setLabelWord(currentWord.trim());
       setValue("word", "");
-      setIsSearchOn(true);
     };
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchWord(labelWord));
@@ -45,4 +43,4 @@ const HeadSearch = ({
   );
 };
 
-export default HeadSearch;
+export default Search;

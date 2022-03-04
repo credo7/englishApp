@@ -2,10 +2,10 @@
   display: grid;
   grid-template-columns: 5% 40% 10% 40% 5%;
   grid-template-areas:
-    "....... word-list-container ...... ....... ......"
-    "....... word-list-container2 word-list-container2 word-list-container2 ......";
-  .word-list-container {
-    grid-area: word-list-container;
+    "....... word-search-container ...... ....... ......"
+    "....... word-list-container word-list-container word-list-container ......";
+  .word-search-container {
+    grid-area: word-search-container;
     width: 100%;
     position: relative;
     display: flex;
@@ -14,8 +14,8 @@
     margin: 12px;
     justify-content: left;
   }
-  .word-list-container2 {
-    grid-area: word-list-container2;
+  .word-list-container {
+    grid-area: word-list-container;
     h1 {
       font-size: 80px;
       margin-right: auto;
