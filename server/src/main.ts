@@ -1,19 +1,13 @@
 import { ValidationPipe } from '@nestjs/common';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as cors from 'cors';
-import * as cookieParser from 'cookie-parser';
+import { middleware } from './app.middleware';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 3001;
   const app = await NestFactory.create(AppModule);
 
-  app.use(cookieParser());
-  app.use(
-    cors({
-      origin: '*',
-    }),
-  );
+  middleware(app);
 
   app.useGlobalPipes(new ValidationPipe());
 
