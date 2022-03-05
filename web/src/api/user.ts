@@ -16,7 +16,7 @@ export const getUserByLogin = (login: string) => {
 
 export const createUser = (login: string, pass: string) => {
   return api
-    .post<ICreateUser, AxiosResponse<any>>("auth/local/signup", {
+    .post<ICreateUser, AxiosResponse<any>>("auth/register", {
       login,
       password: pass,
     })

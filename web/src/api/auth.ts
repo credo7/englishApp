@@ -13,7 +13,7 @@ export const signIn = async (
 ): Promise<void> => {
   const r = await api
     .post<{ username: string; password: string | null }, AxiosResponse<any>>(
-      "auth/local/signin",
+      "auth/login",
       {
         login: username,
         password,

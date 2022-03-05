@@ -72,8 +72,8 @@ export class AuthService {
     }
 
     const refreshTokensMatches = await bcrypt.compare(
-        refreshToken,
-        user.hashedRefreshToken
+      refreshToken,
+      user.hashedRefreshToken,
     );
 
     if (!refreshTokensMatches)
@@ -123,7 +123,7 @@ export class AuthService {
           login,
         },
         {
-          secret: 'accessTokenSecret',
+          secret: 'process.env.ACCESS_SECRET',
           expiresIn: 15 * 60,
         },
       ),
@@ -132,7 +132,7 @@ export class AuthService {
           sub: userId,
           login,
         },
-        { secret: 'refreshTokenSecret', expiresIn: 60 * 60 * 24 * 7 },
+        { secret: 'process.env.REFRESH_SECRET', expiresIn: 60 * 60 * 24 * 7 },
       ),
     ]);
 

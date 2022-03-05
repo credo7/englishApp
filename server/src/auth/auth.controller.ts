@@ -25,7 +25,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
-  @Post('local/signup')
+  @Post('register')
   @HttpCode(HttpStatus.CREATED)
   async signupLocal(
     @Body() dto: AuthDto,
@@ -40,7 +40,7 @@ export class AuthController {
   }
 
   @Public()
-  @Post('local/signin')
+  @Post('login')
   @HttpCode(HttpStatus.OK)
   async signinLocal(
     @Body() dto: AuthDto,
