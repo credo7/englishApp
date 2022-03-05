@@ -20,7 +20,7 @@ export class AuthService {
     });
 
     const tokens = await this.getTokens(newUser.id, newUser.login);
-    await this.updateRefreshToken(newUser.id, tokens.refresh_token);
+    await this.updateRefreshToken(newUser.id, tokens.refreshToken);
     return tokens;
   }
 
@@ -42,7 +42,7 @@ export class AuthService {
     if (!passwordMatches) throw new ForbiddenException('Invalid password');
 
     const tokens = await this.getTokens(user.id, user.login);
-    await this.updateRefreshToken(user.id, tokens.refresh_token);
+    await this.updateRefreshToken(user.id, tokens.refreshToken);
     return tokens;
   }
 
@@ -80,7 +80,7 @@ export class AuthService {
       throw new ForbiddenException('Invalid refresh token');
 
     const tokens = await this.getTokens(user.id, user.login);
-    await this.updateRefreshToken(user.id, tokens.refresh_token);
+    await this.updateRefreshToken(user.id, tokens.refreshToken);
     return tokens;
   }
 
@@ -137,8 +137,8 @@ export class AuthService {
     ]);
 
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken,
+      accessToken,
+      refreshToken,
     };
   }
 }

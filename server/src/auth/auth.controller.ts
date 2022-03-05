@@ -32,11 +32,11 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<any> {
     const tokens = await this.authService.signupLocal(dto);
-    response.cookie('refresh_token', tokens.refresh_token, {
+    response.cookie('refreshToken', tokens.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    return { access_token: tokens.access_token };
+    return { accessToken: tokens.accessToken };
   }
 
   @Public()
@@ -47,11 +47,11 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<any> {
     const tokens = await this.authService.signinLocal(dto);
-    response.cookie('refreshToken', tokens.refresh_token, {
+    response.cookie('refreshToken', tokens.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    return { access_token: tokens.access_token };
+    return { accessToken: tokens.accessToken };
   }
 
   @UseGuards(AccessTokenGuard)
@@ -72,11 +72,11 @@ export class AuthController {
   ): Promise<string> {
     const oldRefreshToken = request?.cookies['refreshToken'];
     const tokens = await this.authService.refreshTokens(userId, oldRefreshToken);
-    response.cookie('refresh_token', tokens.refresh_token, {
+    response.cookie('refreshToken', tokens.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    return tokens.access_token
+    return tokens.accessToken
   }
 
   @Public()
