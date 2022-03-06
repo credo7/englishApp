@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { modalActivate } from "../store/action-creators/modal";
-import axios from "axios";
+import { api } from "../api/api";
 
 const AuthContext = createContext();
 
@@ -25,20 +25,6 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  // const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
-
-    // const api = axios.create({
-    //   baseURL: API_URL,
-    // });
-
-    // api.interceptors.request.use((config) => {
-    //   if (config.headers) {
-    //     config.headers.Authorization = `Bearer ${token}`;
-    //   }
-
-    //   return config;
-    // });
 
   const loginUser = async (login, password) => {
     let response = await fetch("http://localhost:3001/auth/login", {
@@ -68,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   let updateToken = async () => {
-    let response = await fetch("http://localhost:3001/auth/refresh/", {
+    const response = await fetch("http://localhost:3001/auth/refresh/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -91,11 +77,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // const uptToken = async () => {
-  //   const r = await this.api.post('auth/refresh').then((res) => res.data)
-  //   console.log(r)
+  const uptToken = async () => {
+    const r = await api.post('auth/refresh').then((res) => res.data)
+    console.log(r)
 
-  // };
+  };
 
   let contextData = {
     user,
@@ -109,14 +95,13 @@ export const AuthProvider = ({ children }) => {
       updateToken();
     }
 
-    let fourMinutes = 5000;
-    //  * 60 * 4;
+    let fourteenMinutes = 1000 * 60 * 14;
 
     let interval = setInterval(() => {
       if (token) {
         updateToken();
       }
-    }, fourMinutes);
+    }, fourteenMinutes);
     return () => clearInterval(interval);
   }, [token, loading]);
 
