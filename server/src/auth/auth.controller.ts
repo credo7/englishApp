@@ -19,6 +19,7 @@ import {
   Public,
 } from 'src/common/decorators';
 import { Response, Request } from 'express';
+import { Tokens } from './types';
 
 @Controller('auth')
 export class AuthController {
@@ -30,13 +31,8 @@ export class AuthController {
   async signupLocal(
     @Body() dto: AuthDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<any> {
-    const tokens = await this.authService.signupLocal(dto);
-    response.cookie('refreshToken', tokens.refreshToken, {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-    });
-    return { accessToken: tokens.accessToken };
+  ): Promise<Tokens> {
+    return this.authService.signupLocal(dto);
   }
 
   @Public()
@@ -45,13 +41,8 @@ export class AuthController {
   async signinLocal(
     @Body() dto: AuthDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<any> {
-    const tokens = await this.authService.signinLocal(dto);
-    response.cookie('refreshToken', tokens.refreshToken, {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-    });
-    return { accessToken: tokens.accessToken };
+  ): Promise<Tokens> {
+    return this.authService.signinLocal(dto);
   }
 
   @UseGuards(AccessTokenGuard)
@@ -69,17 +60,9 @@ export class AuthController {
     @GetCurrentUser('sub') userId: number,
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<string> {
-    const oldRefreshToken = request?.cookies['refreshToken'];
-    const tokens = await this.authService.refreshTokens(
-      userId,
-      oldRefreshToken,
-    );
-    response.cookie('refreshToken', tokens.refreshToken, {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-    });
-    return tokens.accessToken;
+    @Body() refreshToken: string,
+  ): Promise<Tokens> {
+    return this.authService.refreshTokens(userId, refreshToken);
   }
 
   @Public()

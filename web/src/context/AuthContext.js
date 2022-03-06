@@ -3,7 +3,6 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { modalActivate } from "../store/action-creators/modal";
-import { api } from "../api/api";
 
 const AuthContext = createContext();
 
@@ -40,6 +39,7 @@ export const AuthProvider = ({ children }) => {
       setToken(data.accessToken);
       setUser(jwt_decode(data.accessToken));
       localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
       navigate("/");
     } else {
       dispatch(modalActivate("Oops.. Something went wrong"));
@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setUser(null);
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     navigate("/login");
   };
 
@@ -67,7 +68,8 @@ export const AuthProvider = ({ children }) => {
     if (response.status === 200) {
       setToken(data);
       setUser(jwt_decode(data));
-      localStorage.setItem("accessToken", data);
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
     } else {
       logoutUser();
     }
@@ -75,12 +77,6 @@ export const AuthProvider = ({ children }) => {
     if (loading) {
       setLoading(false);
     }
-  };
-
-  const uptToken = async () => {
-    const r = await api.post('auth/refresh').then((res) => res.data)
-    console.log(r)
-
   };
 
   let contextData = {

@@ -34,13 +34,6 @@ const Main: React.FC = () => {
   return (
     <>
       <div className="main">
-        <button
-          onClick={() => {
-            foo();
-          }}
-        >
-          Click me
-        </button>
         <div className="word-search-container">
           <Search setWords={setWords} />
         </div>
