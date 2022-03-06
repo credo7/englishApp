@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import "./styles.scss";
 import { createUser, getUserByLogin } from "../../api/user";
-import { signIn } from "../../api/auth";
+// import { signIn } from "../../api/auth";
 import { useAppDispatch } from "../../hooks/useTypedSelector";
 import CircleLoading from "../../components/CircleLoading";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { authorized } from "../../store/action-creators/auth";
+import AuthContext from "../../context/AuthContext";
 
 const Container = styled.div`
   height: 100%;
@@ -30,6 +31,8 @@ const Register = () => {
     setError,
     formState: { errors },
   } = useForm<IRegisterForm>();
+
+  const { loginUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -90,21 +93,21 @@ const Register = () => {
       return;
     }
 
-    const usersCreateResponse = await createUser(login, password);
+    const usersCreateResponse = await createUser(login, password, loginUser);
 
-    if (usersCreateResponse.access_token) {
-      try {
-        await signIn(login, password, setErrorMessage).finally(() => {
-          setIsLoading(false);
-          dispatch(authorized())
-          navigate("/");
-        });
-      } catch (err) {
-        setErrorMessage(`${err}`);
-      }
-    } else {
-      setErrorMessage(usersCreateResponse.msg);
-    }
+    // if (usersCreateResponse.accessToken) {
+    //   try {
+    //     await signIn(login, password, setErrorMessage).finally(() => {
+    //       setIsLoading(false);
+    //       dispatch(authorized())
+    //       navigate("/");
+    //     });
+    //   } catch (err) {
+    //     setErrorMessage(`${err}`);
+    //   }
+    // } else {
+    //   setErrorMessage(usersCreateResponse.msg);
+    // }
   };
 
   return (

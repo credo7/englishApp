@@ -3,10 +3,13 @@ import React, { useEffect, useState } from "react";
 import WordList from "../../components/WordList";
 import Search from "../../components/WordSearch";
 import { getWords } from "../../api/words";
+import { getToken } from "../../utils/token";
 
 const Main: React.FC = () => {
   const [words, setWords] = useState([]);
 
+
+  
   useEffect(() => {
     async function fetchData() {
       const words = await getWords();

@@ -71,12 +71,15 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<string> {
     const oldRefreshToken = request?.cookies['refreshToken'];
-    const tokens = await this.authService.refreshTokens(userId, oldRefreshToken);
+    const tokens = await this.authService.refreshTokens(
+      userId,
+      oldRefreshToken,
+    );
     response.cookie('refreshToken', tokens.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    return tokens.accessToken
+    return tokens.accessToken;
   }
 
   @Public()

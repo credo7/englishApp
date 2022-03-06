@@ -70,7 +70,7 @@ export class AuthService {
     if (!user || !user.hashedRefreshToken) {
       throw new ForbiddenException('Access Denied');
     }
-
+    
     const refreshTokensMatches = await bcrypt.compare(
       refreshToken,
       user.hashedRefreshToken,
@@ -86,7 +86,6 @@ export class AuthService {
 
   async updateRefreshToken(userId: number, refreshToken: string) {
     const hash = await this.hashData(refreshToken);
-    console.log(refreshToken);
     await this.prisma.user.update({
       where: {
         id: userId,

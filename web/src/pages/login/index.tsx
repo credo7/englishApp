@@ -1,13 +1,11 @@
 import "./styles.scss";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import CircleLoading from "../../components/CircleLoading";
-import { Link, useNavigate } from "react-router-dom";
-import { signIn } from "../../api/auth";
-import { useDispatch } from "react-redux";
-import { authorized } from "../../store/action-creators/auth";
+import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 
 const Container = styled.div`
   height: 100%;
@@ -39,20 +37,13 @@ const LoginInput = styled.input`
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loginErrors, setLoginErrors] = useState<string>("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { loginUser } = useContext(AuthContext);
 
   const loginSubmit: SubmitHandler<FieldValues> = async ({
     login,
     password,
   }) => {
-    setIsLoading(true);
-    signIn(login, password, setLoginErrors).finally(() => {
-      setIsLoading(false);
-      dispatch(authorized());
-      navigate("/");
-    });
+    loginUser(login, password);
   };
 
   return (
@@ -72,7 +63,6 @@ const Login = () => {
             autoComplete="current-password"
             {...register("password", { required: true })}
           />
-          <span className="login-errors">{loginErrors}</span>
           <button type="submit" className="login-btn">
             {isLoading ? (
               <CircleLoading bgColor="#fff" width="35px" height="35px" />

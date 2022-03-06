@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { addWord } from "../../api/words";
 import { RootState } from "../../store/reducers";
@@ -20,7 +20,7 @@ const WordData = ({ labelWord, setWords, setLabelWord }: any) => {
   const playSound = (url: string) => (e: React.ChangeEvent<any>) => {
     const sound = new Audio(url);
     if (!url) {
-      return <div>ERROR</div>
+      return <div>ERROR</div>;
     }
     sound.play();
   };
