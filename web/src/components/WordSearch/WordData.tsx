@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { addWord } from "../../api/words";
 import { RootState } from "../../store/reducers";
-import { capitalizeFirstLetter } from "../functions";
+import { capitalizeFirstLetter } from "../../utils/functions";
 
 const WordData = ({ labelWord, setWords, setLabelWord }: any) => {
   const state = useSelector((state: RootState) => state.currentWord);
