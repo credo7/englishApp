@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   );
   const [user, setUser] = useState(() =>
     localStorage.getItem("accessToken")
-      ? jwt_decode(localStorage.getItem("accessToken"))
+      ? jwt_decode(localStorage.getItem("accessToken") || "")
       : null
   );
   const [loading, setLoading] = useState(true);
@@ -46,44 +46,46 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  let logoutUser = () => {
+  const logoutUser = useCallback(() => {
     setToken(null);
     setUser(null);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     navigate("/login");
-  };
+  }, [navigate]);
 
-  let updateToken = async () => {
-    const response = await fetch("http://localhost:3001/auth/refresh/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+  const updateToken = useCallback(async () => {
+    if (user && token && window.location.pathname === "/") {
+      const refreshToken = localStorage.getItem("refreshToken");
+      const response = await fetch("http://localhost:3001/auth/refresh/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({ refreshToken }),
+      });
 
-    let data = await response.json();
+      let data = await response.json();
 
-    if (response.status === 200) {
-      setToken(data);
-      setUser(jwt_decode(data));
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
-    } else {
-      logoutUser();
+      if (response.status === 200) {
+        setToken(data.accessToken);
+        setUser(jwt_decode(data.accessToken));
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+      } else {
+        logoutUser();
+      }
     }
-
     if (loading) {
       setLoading(false);
     }
-  };
+  }, [token, loading, logoutUser, user]);
 
   let contextData = {
     user,
     token,
     loginUser,
-    logoutUser,
   };
 
   useEffect(() => {
@@ -91,7 +93,7 @@ export const AuthProvider = ({ children }) => {
       updateToken();
     }
 
-    let fourteenMinutes = 1000 * 60 * 14;
+    let fourteenMinutes = 5000;
 
     let interval = setInterval(() => {
       if (token) {
@@ -99,7 +101,7 @@ export const AuthProvider = ({ children }) => {
       }
     }, fourteenMinutes);
     return () => clearInterval(interval);
-  }, [token, loading]);
+  }, [token, loading, updateToken]);
 
   return (
     <AuthContext.Provider value={contextData}>

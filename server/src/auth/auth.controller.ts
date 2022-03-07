@@ -18,7 +18,7 @@ import {
   GetCurrentUserId,
   Public,
 } from 'src/common/decorators';
-import { Response, Request } from 'express';
+import { Response } from 'express';
 import { Tokens } from './types';
 
 @Controller('auth')
@@ -58,11 +58,13 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async refreshTokens(
     @GetCurrentUser('sub') userId: number,
-    @Req() request: Request,
-    @Res({ passthrough: true }) response: Response,
-    @Body() refreshToken: string,
+    @Body() data,
   ): Promise<Tokens> {
-    return this.authService.refreshTokens(userId, refreshToken);
+    const tokens = await this.authService.refreshTokens(
+      userId,
+      data['refreshToken'],
+    );
+    return tokens;
   }
 
   @Public()
