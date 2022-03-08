@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 5% 40% 10% 40% 5%;
   grid-template-areas:
-    "....... word-search-container ...... ....... ......"
+    "....... word-search-container ...... ....... main-exit"
     "....... word-list-container word-list-container word-list-container ......";
   .word-search-container {
     grid-area: word-search-container;

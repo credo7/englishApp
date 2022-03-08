@@ -9,6 +9,7 @@ import AuthContext from "../../context/AuthContext";
 const Main: React.FC = () => {
   const { logged } = useContext(AuthContext);
   const navigate = useNavigate();
+
   if (!logged) navigate("/login");
 
   const [words, setWords] = useState([]);
@@ -26,6 +27,9 @@ const Main: React.FC = () => {
       <div className="main">
         <div className="word-search-container">
           <Search setWords={setWords} />
+        </div>
+        <div className="word-exit">
+          <button className="word-exit-button"></button>
         </div>
         <div className="word-list-container">
           <WordList words={words} />
