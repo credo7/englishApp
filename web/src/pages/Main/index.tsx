@@ -1,10 +1,16 @@
 import "./index.scss";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WordList from "../../components/WordList";
 import Search from "../../components/WordSearch";
 import { getWords } from "../../api/words";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 
 const Main: React.FC = () => {
+  const { logged } = useContext(AuthContext);
+  const navigate = useNavigate();
+  if (!logged) navigate("/login");
+
   const [words, setWords] = useState([]);
 
   useEffect(() => {

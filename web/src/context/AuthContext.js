@@ -21,6 +21,8 @@ export const AuthProvider = ({ children }) => {
   );
   const [loading, setLoading] = useState(true);
 
+  const [logged, setLogged] = useState(false);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -40,6 +42,7 @@ export const AuthProvider = ({ children }) => {
       setUser(jwt_decode(data.accessToken));
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
+      setLogged(true);
       navigate("/");
     } else {
       dispatch(modalActivate("Oops.. Something went wrong"));
@@ -51,6 +54,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    setLogged(false);
     navigate("/login");
   }, [navigate]);
 
@@ -86,6 +90,7 @@ export const AuthProvider = ({ children }) => {
     user,
     token,
     loginUser,
+    logged,
   };
 
   useEffect(() => {
