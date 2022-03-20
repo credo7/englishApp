@@ -6,14 +6,14 @@ EXPOSE 3000
 
 CMD ["npm", "run", "start:dev"]
 
-COPY ./app/package.json ./
-COPY ./app/package-lock.json ./
-COPY ./app/tsconfig.json ./
-COPY ./app/tsconfig.build.json ./
-COPY ./app/nest-cli.json ./
+COPY ./package.json ./
+COPY ./package-lock.json ./
+COPY ./tsconfig.json ./
+COPY ./tsconfig.build.json ./
+COPY ./nest-cli.json ./
 
 RUN npm install
 
-COPY ./app/src ./src
+COPY ./src ./src
 
 RUN npm run build

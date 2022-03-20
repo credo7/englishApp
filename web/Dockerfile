@@ -14,6 +14,5 @@ RUN npm install
 
 COPY ./public ./public
 COPY ./src ./src
-COPY ./.env ./
 
 RUN npm run build

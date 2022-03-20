@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const loginUser = async (login, password) => {
-    let response = await fetch("http://localhost:3001/auth/login", {
+    let response = await fetch("http://localhost:8080/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   const updateToken = useCallback(async () => {
     if (user && token && window.location.pathname === "/") {
       const refreshToken = localStorage.getItem("refreshToken");
-      const response = await fetch("http://localhost:3001/auth/refresh/", {
+      const response = await fetch("http://localhost:8080/auth/refresh/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

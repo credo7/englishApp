@@ -19,7 +19,7 @@ import {
   Public,
 } from 'src/common/decorators';
 import { Response } from 'express';
-import { Tokens } from './types';
+import { Tokens } from './types/tokens.type';
 
 @Controller('auth')
 export class AuthController {
