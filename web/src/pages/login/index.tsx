@@ -36,7 +36,7 @@ const LoginInput = styled.input`
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
   const { loginUser } = useContext(AuthContext);
 
   const loginSubmit: SubmitHandler<FieldValues> = async ({
