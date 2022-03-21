@@ -70,7 +70,7 @@ export class AuthService {
     if (!user || !user.hashedRefreshToken) {
       throw new ForbiddenException('Access Denied');
     }
-    
+
     const refreshTokensMatches = await bcrypt.compare(
       refreshToken,
       user.hashedRefreshToken,

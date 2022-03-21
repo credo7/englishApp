@@ -13,17 +13,9 @@ services:
     container_name: server
     build: ./server
     ports:
-     - 8080:3000
+     - 8080:8080
   client:
     container_name: web
     build: ./web
     ports:
      - 3000:3000
-    networks:
-      - transcendence
-networks:
-  transcendence:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
