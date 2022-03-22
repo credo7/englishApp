@@ -1,4 +1,5 @@
 ### EnglishApp
+> Save list of your english words with my app!
 
 ### Stack
 - TypeScript
