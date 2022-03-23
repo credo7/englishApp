@@ -20,4 +20,4 @@ COPY ./src ./src
 
 CMD ["npm", "run", "start:dev"]
 
-RUN npm run build
+# RUN npm run build
