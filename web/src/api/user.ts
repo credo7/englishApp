@@ -8,7 +8,7 @@ interface CreateUser {
 
 export const getUserByLogin = (login: string) => {
   return api
-    .get<any | null>("auth/user", {
+    .get<any | null>("/auth/user", {
       params: { login },
     })
     .then((res) => res.data);

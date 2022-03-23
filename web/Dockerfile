@@ -15,4 +15,4 @@ RUN npm install
 COPY ./public ./public
 COPY ./src ./src
 
-RUN npm run build
+# RUN npm run build

@@ -12,6 +12,7 @@ export class AuthService {
   async signupLocal(dto): Promise<Tokens> {
     const hashedPassword = await this.hashData(dto.password);
 
+    // here is your next problem
     const newUser = await this.prisma.user.create({
       data: {
         login: dto.login,
@@ -97,20 +98,19 @@ export class AuthService {
   }
 
   async findOneByLogin(login: string) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        login,
-      },
-    });
-
-    if (!user) {
+    try {
+      await this.prisma.user.findUnique({
+        where: {
+          login,
+        },
+      });
+      return login;
+    } catch (_e) {
       return false;
     }
-
-    return login;
   }
 
-  hashData(data: String): string {
+  hashData(data: String): Promise<string> {
     return bcrypt.hash(data, 10);
   }
 
