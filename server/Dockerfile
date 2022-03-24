@@ -1,23 +1,19 @@
-FROM node
+FROM node:16 as builder
 
-WORKDIR /app
+WORKDIR ./app
 
-EXPOSE 8080
-
-RUN npm install -g prisma
-
-COPY ./package.json ./
-COPY ./package-lock.json ./
-COPY ./tsconfig.json ./
-COPY ./tsconfig.build.json ./
-COPY ./nest-cli.json ./
-COPY ./prisma ./prisma
-COPY .env ./
+COPY package*.json ./
 
 RUN npm install
 
-COPY ./src ./src
+COPY . .
 
-CMD ["npm", "run", "start:dev"]
+RUN npm run build
 
-# RUN npm run build
+FROM node:16
+
+COPY --from=builder ./app/node_modules ./node_modules
+COPY --from=builder ./app/package*.json ./
+COPY --from=builder ./app/dist ./dist
+
+CMD ["npm", "run", "start:prod"]

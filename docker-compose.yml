@@ -1,7 +1,8 @@
 version: '3'
 services:
-  db:
-    container_name: db
+  services:
+    container_name: postgres
+    restart: always
     image: postgres:12
     ports:
      - 5432:5432
@@ -9,13 +10,27 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nestjs
+    deploy:
+      resources:
+        limits:
+          memory: 2G
   server:
     container_name: server
+    restart: always
     build: ./server
     ports:
      - 8080:8080
+    deploy:
+      resources:
+        limits:
+          memory: 1G
   client:
     container_name: web
+    restart: always
     build: ./web
     ports:
-     - 3000:3000
+     - 80:80
+    deploy:
+      resources:
+        limits:
+          memory: 1G
