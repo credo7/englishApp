@@ -1,15 +1,18 @@
 version: '3'
 services:
-  services:
-    container_name: postgres
+  mysql:
+    container_name: mysql
     restart: always
-    image: postgres:12
+    image: mysql:latest
     ports:
-     - 5432:5432
+     - 3306:3306
+    networks:
+     - shared-network
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nestjs
+      MYSQL_ROOT_PASSWORD: EnglishAreSoAwesome!
+      MYSQL_DATABASE: english_app
+    volumes:
+      - /opt/mysql_data:/var/lib/mysql
     deploy:
       resources:
         limits:
@@ -20,6 +23,13 @@ services:
     build: ./server
     ports:
      - 8080:8080
+    depends_on:
+     - mysql
+    networks:
+     - shared-network
+    volumes:
+      - .:/app
+      - .:/app/node_modules/bcrypt/
     deploy:
       resources:
         limits:
@@ -30,7 +40,12 @@ services:
     build: ./web
     ports:
      - 80:80
+    networks:
+     - shared-network
     deploy:
       resources:
         limits:
           memory: 1G
+
+networks:
+  shared-network:
