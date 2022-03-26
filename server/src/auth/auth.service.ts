@@ -1,32 +1,40 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import * as bcrypt from 'bcrypt';
-import { Tokens } from 'src/auth/types/tokens.type';
 import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, Not } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+
+import { Tokens } from './types/tokens.type';
 import { AuthDto } from './dto';
+
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    private jwtService: JwtService,
+  ) {}
 
   async signupLocal(dto): Promise<Tokens> {
     const hashedPassword = await this.hashData(dto.password);
 
-    // here is your next problem
-    const newUser = await this.prisma.user.create({
-      data: {
-        login: dto.login,
-        hashedPassword,
-      },
-    });
+    const user = new User();
 
-    const tokens = await this.getTokens(newUser.id, newUser.login);
-    await this.updateRefreshToken(newUser.id, tokens.refreshToken);
+    user.login = dto.login;
+    user.hashedPassword = hashedPassword;
+
+    await this.userRepository.save(user);
+
+    const tokens = await this.getTokens(user.id, user.login);
+    await this.updateRefreshToken(user.id, tokens.refreshToken);
+
     return tokens;
   }
 
   async signinLocal(dto: AuthDto): Promise<Tokens> {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.userRepository.findOne({
       where: {
         login: dto.login,
       },
@@ -47,24 +55,22 @@ export class AuthService {
     return tokens;
   }
 
-  async logout(userId: number) {
-    await this.prisma.user.updateMany({
-      where: {
-        id: userId,
-        hashedRefreshToken: {
-          not: null,
-        },
+  async logout(id: string) {
+    await this.userRepository.update(
+      {
+        id,
+        hashedRefreshToken: Not(null),
       },
-      data: {
+      {
         hashedRefreshToken: null,
       },
-    });
+    );
   }
 
-  async refreshTokens(userId: number, refreshToken: string) {
-    const user = await this.prisma.user.findUnique({
+  async refreshTokens(id: string, refreshToken: string) {
+    const user = await this.userRepository.findOne({
       where: {
-        id: userId,
+        id,
       },
     });
 
@@ -85,36 +91,37 @@ export class AuthService {
     return tokens;
   }
 
-  async updateRefreshToken(userId: number, refreshToken: string) {
+  async updateRefreshToken(id: string, refreshToken: string) {
     const hash = await this.hashData(refreshToken);
-    await this.prisma.user.update({
-      where: {
-        id: userId,
+    await this.userRepository.update(
+      {
+        id,
       },
-      data: {
+      {
         hashedRefreshToken: hash,
       },
-    });
+    );
   }
 
   async findOneByLogin(login: string) {
     try {
-      await this.prisma.user.findUnique({
+      await this.userRepository.findOne({
         where: {
           login,
         },
       });
+
       return login;
     } catch (_e) {
       return false;
     }
   }
 
-  hashData(data: String): Promise<string> {
+  hashData(data: string): Promise<string> {
     return bcrypt.hash(data, 10);
   }
 
-  async getTokens(userId: number, login: string): Promise<Tokens> {
+  async getTokens(userId: string, login: string): Promise<Tokens> {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {

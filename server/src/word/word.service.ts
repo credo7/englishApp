@@ -1,35 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { User } from '../entities/user.entity';
+import { Word } from '../entities/word.entity';
 
 @Injectable()
 export class WordService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    @InjectRepository(Word)
+    private wordRepository: Repository<Word>,
+  ) {}
 
-  async getWordsService(userId: number) {
-    const userWords = await this.prisma.word.findMany({
-      where: {
-        userId: userId,
-      },
+  async getWordsService(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['words'],
     });
 
-    const words = userWords.map((el) => el.name);
+    const words = user.words.map((el) => el.name);
 
     return words;
   }
 
-  async addWordService(userId: number, name: string) {
-    const isRecorded = await this.prisma.word.findFirst({
-      where: {
-        name,
-        userId,
-      },
+  async addWordService(id: string, name: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['words'],
     });
 
-    if (!isRecorded) {
-      await this.prisma.word.create({
-        data: {
-          userId,
-          name,
+    if (!user.words.find((el) => el.name === name)) {
+      await this.wordRepository.insert({
+        name,
+        user: {
+          id,
         },
       });
     }

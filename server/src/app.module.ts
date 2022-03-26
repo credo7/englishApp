@@ -1,8 +1,13 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
+
+import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config/config.service';
+
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { AccessTokenGuard } from './common/guards';
-import { PrismaModule } from './prisma/prisma.module';
+
 import { WordModule } from './word/word.module';
 
 @Module({
@@ -13,6 +18,14 @@ import { WordModule } from './word/word.module';
       useClass: AccessTokenGuard,
     },
   ],
-  imports: [AuthModule, PrismaModule, WordModule],
+  imports: [
+    ConfigModule,
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => configService.database,
+      inject: [ConfigService],
+    }),
+    AuthModule,
+    WordModule,
+  ],
 })
 export class AppModule {}

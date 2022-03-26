@@ -21,3 +21,4 @@ model Word {
   User   User?  @relation(fields: [userId], references: [id])
   userId Int?
 }
+© 2022 Git

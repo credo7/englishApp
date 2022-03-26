@@ -48,7 +48,7 @@ export class AuthController {
   @UseGuards(AccessTokenGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  logout(@GetCurrentUserId() userId: number) {
+  logout(@GetCurrentUserId() userId: string) {
     return this.authService.logout(userId);
   }
 
@@ -57,7 +57,7 @@ export class AuthController {
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   async refreshTokens(
-    @GetCurrentUser('sub') userId: number,
+    @GetCurrentUser('sub') userId: string,
     @Body() data,
   ): Promise<Tokens> {
     const tokens = await this.authService.refreshTokens(
