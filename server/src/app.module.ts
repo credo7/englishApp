@@ -21,7 +21,9 @@ import { WordModule } from './word/word.module';
   imports: [
     ConfigModule,
     TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService) => configService.database,
+      useFactory: async (configService: ConfigService) => {
+        return configService.database;
+      },
       inject: [ConfigService],
     }),
     AuthModule,

@@ -13,7 +13,7 @@ export class User {
   @Column()
   hashedPassword: string;
 
-  @Column()
+  @Column({ nullable: true })
   hashedRefreshToken: string;
 
   @ManyToOne(() => Word)

@@ -20,7 +20,7 @@ export class WordService {
       relations: ['words'],
     });
 
-    const words = user.words.map((el) => el.name);
+    const words = user.words?.map((el) => el.name);
 
     return words;
   }
@@ -31,7 +31,7 @@ export class WordService {
       relations: ['words'],
     });
 
-    if (!user.words.find((el) => el.name === name)) {
+    if (!user.words?.find((el) => el.name === name)) {
       await this.wordRepository.insert({
         name,
         user: {

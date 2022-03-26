@@ -105,7 +105,7 @@ export class AuthService {
 
   async findOneByLogin(login: string) {
     try {
-      await this.userRepository.findOne({
+      await this.userRepository.findOneOrFail({
         where: {
           login,
         },
