@@ -9,11 +9,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nestjs
-  server:
-    container_name: server
-    build: ./server
-    ports:
-     - 8080:8080
+  # server:
+  #   container_name: server
+  #   build: ./server
+  #   ports:
+  #    - 8080:8080
   client:
     container_name: web
     build: ./web

@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR ./app
+WORKDIR /app
 
 EXPOSE 3000
 
