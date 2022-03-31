@@ -3,6 +3,8 @@ node_modules
 /dist
 nest-connector/uploads
 
+db/data
+
 
 # local env files
 .env.local

@@ -2,23 +2,39 @@ version: '3'
 services:
   db:
     container_name: db
-    image: postgres:12
-    ports:
-     - 5432:5432
+    image: postgres:11.13
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nestjs
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=nestjs
+      - TZ=Europe/Moscow
+      - PGTZ=Europe/Moscow
     volumes:
       - ./db/data:/var/lib/postgresql/data
       - ./db/scripts:/docker-entrypoint-initdb.d
-  # server:
-  #   container_name: server
-  #   build: ./server
-  #   ports:
-  #    - 8080:8080
+    networks:
+      - transcendence
+    command: postgres -c stats_temp_directory=/tmp
+  server:
+    container_name: server
+    build: ./server
+    ports:
+      - 8080:8080
+    networks:
+      transcendence:
+        ipv4_address: 172.20.0.5
+    depends_on:
+      - db
   client:
     container_name: web
     build: ./web
     ports:
-     - 3000:3000
+      - 3000:3000
+    networks:
+      - transcendence
+networks:
+  transcendence:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
