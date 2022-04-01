@@ -13,13 +13,9 @@ import {
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { AccessTokenGuard, RefreshTokenGuard } from 'src/common/guards';
-import {
-  GetCurrentUser,
-  GetCurrentUserId,
-  Public,
-} from 'src/common/decorators';
 import { Response } from 'express';
 import { Tokens } from './types/tokens.type';
+import { Public } from 'src/common/decorators';
 
 @Controller('auth')
 export class AuthController {
@@ -31,46 +27,51 @@ export class AuthController {
   async signupLocal(
     @Body() dto: AuthDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<Tokens> {
-    return this.authService.signupLocal(dto);
+  ): Promise<any> {
+    return this.authService.registerAccount(dto);
   }
 
   @Public()
-  @Post('login')
-  @HttpCode(HttpStatus.OK)
-  async signinLocal(
-    @Body() dto: AuthDto,
-    @Res({ passthrough: true }) response: Response,
-  ): Promise<Tokens> {
-    return this.authService.signinLocal(dto);
+  @Get('info')
+  async getInfo(){
+    return this.authService.getInfo()
   }
 
-  @UseGuards(AccessTokenGuard)
-  @Post('logout')
-  @HttpCode(HttpStatus.OK)
-  logout(@GetCurrentUserId() userId: number) {
-    return this.authService.logout(userId);
-  }
+  // @Post('login')
+  // @HttpCode(HttpStatus.OK)
+  // async signinLocal(
+  //   @Body() dto: AuthDto,
+  //   @Res({ passthrough: true }) response: Response,
+  // ): Promise<Tokens> {
+  //   return this.authService.signinLocal(dto);
+  // }
 
-  @Public()
-  @UseGuards(RefreshTokenGuard)
-  @Post('refresh')
-  @HttpCode(HttpStatus.OK)
-  async refreshTokens(
-    @GetCurrentUser('sub') userId: number,
-    @Body() data,
-  ): Promise<Tokens> {
-    const tokens = await this.authService.refreshTokens(
-      userId,
-      data['refreshToken'],
-    );
-    return tokens;
-  }
+  // @UseGuards(AccessTokenGuard)
+  // @Post('logout')
+  // @HttpCode(HttpStatus.OK)
+  // logout(@GetCurrentUserId() userId: number) {
+  //   return this.authService.logout(userId);
+  // }
 
-  @Public()
-  @Get('user')
-  @HttpCode(HttpStatus.OK)
-  getUserByLogin(@Query() { login }) {
-    return this.authService.findOneByLogin(login);
-  }
+  // @Public()
+  // @UseGuards(RefreshTokenGuard)
+  // @Post('refresh')
+  // @HttpCode(HttpStatus.OK)
+  // async refreshTokens(
+  //   @GetCurrentUser('sub') userId: number,
+  //   @Body() data,
+  // ): Promise<Tokens> {
+  //   const tokens = await this.authService.refreshTokens(
+  //     userId,
+  //     data['refreshToken'],
+  //   );
+  //   return tokens;
+  // }
+
+  // @Public()
+  // @Get('user')
+  // @HttpCode(HttpStatus.OK)
+  // getUserByLogin(@Query() { login }) {
+  //   return this.authService.findOneByLogin(login);
+  // }
 }

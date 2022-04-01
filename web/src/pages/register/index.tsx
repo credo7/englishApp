@@ -77,14 +77,14 @@ const Register = () => {
       });
 
     setIsLoading(true);
-    const user = await getUserByLogin(login);
+    // const user = await getUserByLogin(login);
 
-    if (user) {
-      setErrorMessage("User with this login already exists");
-      setIsLoading(false);
+    // if (user) {
+    //   setErrorMessage("User with this login already exists");
+    //   setIsLoading(false);
 
-      return;
-    }
+    //   return;
+    // }
 
     const usersCreateResponse = await createUser(login, password, loginUser);
   };

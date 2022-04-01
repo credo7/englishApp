@@ -11,7 +11,6 @@ COPY ./package-lock.json ./
 COPY ./tsconfig.json ./
 COPY ./tsconfig.build.json ./
 COPY ./nest-cli.json ./
-COPY ./prisma ./prisma
 COPY .env ./
 
 RUN npm install
