@@ -7,11 +7,9 @@ import {
 import * as bcrypt from 'bcrypt';
 import { Tokens } from 'src/auth/types/tokens.type';
 import { JwtService } from '@nestjs/jwt';
-import { AuthDto } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
-// import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -20,21 +18,6 @@ export class AuthService {
     private readonly userRepository: Repository<UserEntity>,
     private jwtService: JwtService,
   ) {}
-
-  // async signupLocal(dto): Promise<Tokens> {
-  //   const hashedPassword = await this.hashData(dto.password);
-
-  //   const newUser = await this.prisma.user.create({
-  //     data: {
-  //       login: dto.login,
-  //       hashedPassword,
-  //     },
-  //   });
-
-  //   const tokens = await this.getTokens(newUser.id, newUser.login);
-  //   await this.updateRefreshToken(newUser.id, tokens.refreshToken);
-  //   return tokens;
-  // }
 
   async registerAccount(user) {
     const hashedPassword = await this.hashData(user.password);
@@ -46,9 +29,7 @@ export class AuthService {
 
       const tokens = await this.getTokens(newUser.id, newUser.login);
 
-      this.userRepository.update(newUser.id, {
-        refreshToken: tokens.refreshToken,
-      });
+      this.updateRefreshToken(user.id, tokens.refreshToken);
 
       return tokens;
     } catch {
@@ -59,94 +40,70 @@ export class AuthService {
     }
   }
 
-  async getInfo() {
-    return this.userRepository.find({ select: ['login'] });
+  async login(data) {
+    const user = await this.userRepository.findOne({
+      where: { login: data.login },
+    });
+
+    if (!user) {
+      throw new ForbiddenException('User with this login is not found');
+    }
+
+    const passwordMatches = await bcrypt.compare(data.password, user.password);
+
+    if (!passwordMatches) throw new ForbiddenException('Invalid password');
+
+    const tokens = await this.getTokens(user.id, user.login);
+    this.updateRefreshToken(user.id, tokens.refreshToken);
+    return tokens;
   }
 
-  // async signinLocal(dto: AuthDto): Promise<Tokens> {
-  //   const user = await this.prisma.user.findUnique({
-  //     where: {
-  //       login: dto.login,
-  //     },
-  //   });
+  async logout(userId: number) {
+    await this.userRepository.update(userId, {
+      refreshToken: null,
+    });
+  }
 
-  //   if (!user)
-  //     throw new ForbiddenException('User with this login is not found');
+  async refreshTokens(userId: number, refreshToken: string) {
+    const user = await this.userRepository.findOne(userId);
 
-  //   const passwordMatches = await bcrypt.compare(
-  //     dto.password,
-  //     user.hashedPassword,
-  //   );
+    if (!user || !user.refreshToken) {
+      throw new ForbiddenException('Invalid user id');
+    }
 
-  //   if (!passwordMatches) throw new ForbiddenException('Invalid password');
+    const refreshTokensMatches = await bcrypt.compare(
+      refreshToken,
+      user.refreshToken,
+    );
 
-  //   const tokens = await this.getTokens(user.id, user.login);
-  //   await this.updateRefreshToken(user.id, tokens.refreshToken);
-  //   return tokens;
-  // }
+    if (!refreshTokensMatches) {
+      throw new ForbiddenException('Invalid refreshToken');
+    }
 
-  // async logout(userId: number) {
-  //   await this.prisma.user.updateMany({
-  //     where: {
-  //       id: userId,
-  //       hashedRefreshToken: {
-  //         not: null,
-  //       },
-  //     },
-  //     data: {
-  //       hashedRefreshToken: null,
-  //     },
-  //   });
-  // }
+    const tokens = await this.getTokens(user.id, user.login);
 
-  // async refreshTokens(userId: number, refreshToken: string) {
-  //   const user = await this.prisma.user.findUnique({
-  //     where: {
-  //       id: userId,
-  //     },
-  //   });
+    await this.updateRefreshToken(user.id, tokens.refreshToken);
 
-  //   if (!user || !user.hashedRefreshToken) {
-  //     throw new ForbiddenException('Access Denied');
-  //   }
+    return tokens;
+  }
 
-  //   const refreshTokensMatches = await bcrypt.compare(
-  //     refreshToken,
-  //     user.hashedRefreshToken,
-  //   );
+  async updateRefreshToken(userId: number, refreshToken: string) {
+    const hashRefreshToken = await this.hashData(refreshToken);
 
-  //   if (!refreshTokensMatches)
-  //     throw new ForbiddenException('Invalid refresh token');
+    await this.userRepository.update(userId, {
+      refreshToken: hashRefreshToken,
+    });
+  }
 
-  //   const tokens = await this.getTokens(user.id, user.login);
-  //   await this.updateRefreshToken(user.id, tokens.refreshToken);
-  //   return tokens;
-  // }
-
-  // async updateRefreshToken(userId: number, refreshToken: string) {
-  //   const hash = await this.hashData(refreshToken);
-  //   await this.prisma.user.update({
-  //     where: {
-  //       id: userId,
-  //     },
-  //     data: {
-  //       hashedRefreshToken: hash,
-  //     },
-  //   });
-  // }
-
-  // async findOneByLogin(login: string) {
-  //   try {
-  //     await this.prisma.user.findUnique({
-  //       where: {
-  //         login,
-  //       },
-  //     });
-  //     return login;
-  //   } catch (_e) {
-  //     return false;
-  //   }
-  // }
+  async findOneByLogin(login: string) {
+    const user = await this.userRepository.findOne({
+      where: {
+        login,
+      },
+    });
+    if (user) return login;
+    return false;
+  }
 
   hashData(data: String): Promise<string> {
     return bcrypt.hash(data, 10);
