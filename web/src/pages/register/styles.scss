@@ -1,18 +1,18 @@
 .register-container {
 	margin: 0 auto;
-	width: 1024px;
+	width: 100vw;
 	height: 100vh;
+	min-height: 650px;
+	min-width: 520px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-
+	
 	h1 {
 		margin-bottom: 30px;
-
-		&::selection {
-			background: #29aa44;
-		}
+		color: #58a6ff;
+		font-size: 48px;
 	}
 
 	form {
@@ -21,35 +21,36 @@
 	}
 
 	input {
-		border-radius: 15px;
-		width: calc(400px - 52px);
-		border: 1px solid #2c3e50;
+		border-radius: 4px;
+		box-sizing: border-box;
+		width: 420px;
+		height: 55px;
+		border: 1px solid #a9a9a9;
 		outline: none;
 		font-size: 1.2em;
 		padding: 16px 26px;
-		margin-bottom: 15px;
+		margin-bottom: 30px;
 		transition: all 0.1s ease-in;
-		background: transparent;
-		color: white;
+		color: black;
 
 		&::selection {
-			background: #29aa44;
+			background: #58a6ffc4;
 		}
 
 		&:focus {
-			border-color: #29aa44;
+			border-color: #58a6ffc4;
 		}
 	}
 
 	button {
-		border-radius: 15px;
+		border-radius: 5px;
 		cursor: pointer;
-		width: 400px;
+		width: 420px;
 		height: 50px;
 		font-size: 20px;
 		font-weight: bold;
 		padding: 10px 12px;
-		background: #29aa44;
+		background: #58a6ffc4;
 		border: none;
 		outline: none;
 		color: white;
@@ -59,12 +60,12 @@
 		transition: all 0.05s ease-in;
 
 		&::selection {
-			background: #2c3e50;
+			background: #58a6ffc4;
 		}
 
 		@media (hover: hover) {
 			&:hover {
-				background: #21b941;
+				background: #58a6ff;
 			}
 		}
 		&:active {
@@ -78,31 +79,25 @@
 		text-align: center;
 
 		&::selection {
-			background: #29aa44;
+			background: #58a6ffc4;
 		}
 	}
 
 	.register-link {
-		color: #29aa44;
+		margin-top: 15px;
+		color: #58a6ff;
 		font-size: 1.2em;
+		font-weight: 300;
 		width: fit-content;
 		padding: 0;
 
-		&:hover {
+		&-question{
+			display: inline-block;
+			color: #a9a9a9;
+		}
+		&-answer{
+			display: inline-block;
 			text-decoration: underline;
-		}
-
-		&::selection {
-			background: #29aa44;
-			color: white;
-		}
-	}
-
-	.separator {
-		margin: 30px 0;
-
-		&::selection {
-			background: #29aa44;
 		}
 	}
 }

@@ -10,7 +10,7 @@ import AuthContext from "../../context/AuthContext";
 const Container = styled.div`
   height: 100%;
   weight: 100%;
-  background-color: #20222a;
+  background-color: #161b22;
 `;
 
 interface IRegisterForm {
@@ -123,10 +123,9 @@ const Register = () => {
           </button>
         </form>
 
-        <span className="separator">Or</span>
-
         <Link className="register-link" to="/login">
-          Sign in
+          <div className="register-link-question">Already have profile?</div>{" "}
+          <div className="register-link-answer">Sign in</div>
         </Link>
       </div>
     </Container>

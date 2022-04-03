@@ -29,7 +29,7 @@ export class AuthService {
 
       const tokens = await this.getTokens(newUser.id, newUser.login);
 
-      this.updateRefreshToken(user.id, tokens.refreshToken);
+      await this.updateRefreshToken(user.id, tokens.refreshToken);
 
       return tokens;
     } catch {
@@ -90,9 +90,12 @@ export class AuthService {
   async updateRefreshToken(userId: number, refreshToken: string) {
     const hashRefreshToken = await this.hashData(refreshToken);
 
-    await this.userRepository.update(userId, {
-      refreshToken: hashRefreshToken,
-    });
+    await this.userRepository.update(
+      { id: userId },
+      {
+        refreshToken: hashRefreshToken,
+      },
+    );
   }
 
   async findOneByLogin(login: string) {

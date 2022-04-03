@@ -8,29 +8,33 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 
 const Container = styled.div`
-  height: 100%;
-  weight: 100%;
-  background-color: #20222a;
+  height: 100vh;
+  weight: 100vw;
+  background-color: #161b22;
+  @media (max-width:525px){
+    height: 100%
+  }
 `;
 
 const LoginInput = styled.input`
-  border-radius: 15px;
-  width: calc(400px - 52px);
-  border: 1px solid #2c3e50;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 420px;
+  height: 55px;
+  border: 1px solid #a9a9a9;
   outline: none;
   font-size: 20px;
   padding: 16px 26px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   transition: all 0.1s ease-in;
-  background: transparent;
-  color: white;
-
-  &::selection {
-    background: #29aa44;
-  }
+  color: black;
 
   &:focus {
-    border-color: #29aa44;
+    border-color: #58a6ffc4;
+  }
+
+  @media (max-width:525px) {
+    width:80vw
   }
 `;
 
@@ -49,15 +53,17 @@ const Login = () => {
   return (
     <Container>
       <div className="login-container">
-        <h1>Login page</h1>
+        <h1>Dictionary</h1>
         <form onSubmit={handleSubmit(loginSubmit)}>
           <LoginInput
+            className="form-input"
             type="text"
-            placeholder="Login"
+            placeholder="Username"
             autoComplete="username"
             {...register("login", { required: true })}
           />
           <LoginInput
+            className="form-input"
             type="password"
             placeholder="Password"
             autoComplete="current-password"
@@ -73,7 +79,8 @@ const Login = () => {
         </form>
 
         <Link to="/register" className="register-link">
-          Register
+          <div className="register-link-question">No profile?</div>{" "}
+          <div className="register-link-answer">Sign up</div>
         </Link>
       </div>
     </Container>
