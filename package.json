@@ -4,7 +4,7 @@
   "description": "> Save list of your english words with my app!",
   "main": "index.js",
   "scripts": {
-    "start": "docker-compose up --build && cd server && npm install && npm run start:dev"
+    "start": "docker-compose up --build"
   },
   "repository": {
     "type": "git",

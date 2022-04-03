@@ -6,10 +6,12 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AccessStrategy } from './strategies/access.strategy';
 import { RefreshStrategy } from './strategies/refresh.strategy';
+import { WordsController } from './words.controller';
+import { WordsService } from './words.service';
 
 @Module({
   imports: [JwtModule.register({}), TypeOrmModule.forFeature([UserEntity])],
-  controllers: [AuthController],
-  providers: [AuthService, RefreshStrategy, AccessStrategy],
+  controllers: [AuthController, WordsController],
+  providers: [AuthService, WordsService, RefreshStrategy, AccessStrategy],
 })
 export class AuthModule {}
