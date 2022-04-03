@@ -16,11 +16,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     },
   ],
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '../.env' }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
+        host: config.get<string>('SERVER_HOST'),
         type: config.get<'aurora-data-api'>('TYPEORM_CONNECTION'),
         username: config.get<string>('TYPEORM_USERNAME'),
         password: config.get<string>('TYPEORM_PASSWORD'),

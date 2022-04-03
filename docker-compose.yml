@@ -19,6 +19,13 @@ services:
   server:
     container_name: server
     build: ./server
+    environment:
+      - TYPEORM_PORT=${TYPEORM_PORT}
+      - TYPEORM_DATABASE=${TYPEORM_DATABASE}
+      - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
+      - TYPEORM_USERNAME=${TYPEORM_USERNAME}
+      - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
+      - SERVER_HOST=${SERVER_HOST}
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     networks:
