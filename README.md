@@ -13,7 +13,6 @@
 
 ```
 npm run start
-cd server && npm install && npm run start:dev
 ```
 
 ### Run
@@ -23,4 +22,4 @@ http://localhost:3000
 ```
 
 ### Demo
-> https://youtu.be/UIH-DBEUBVI
+> https://www.youtube.com/watch?v=IUhhCpymxhs
