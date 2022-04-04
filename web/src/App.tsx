@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import { useMediaQuery } from "react-responsive";
+import React from "react";
 
 function App() {
   const isDesktop = useMediaQuery({ query: "(min-width: 525px)" });
@@ -37,4 +38,4 @@ function App() {
   );
 }
 
-export default App;
+export default React.memo(App);
