@@ -11,8 +11,8 @@ const Container = styled.div`
   height: 100vh;
   weight: 100vw;
   background-color: #161b22;
-  @media (max-width:525px){
-    height: 100%
+  @media (max-width: 525px) {
+    height: 100%;
   }
 `;
 
@@ -33,8 +33,8 @@ const LoginInput = styled.input`
     border-color: #58a6ffc4;
   }
 
-  @media (max-width:525px) {
-    width:80vw
+  @media (max-width: 525px) {
+    width: 80vw;
   }
 `;
 
