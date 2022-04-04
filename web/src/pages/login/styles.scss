@@ -6,11 +6,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  }
+}
+
+.login-registration {
+  text-shadow: 3px 3px 1px #58a6ffc4, 0 0 0.5em #58a6ffc4, 0 0 0.2em #58a6ffc4;
+  color: white;
+}
 
 h1 {
     font-size: 48px;
-    color: #58a6ff;
     margin-bottom: 30px;
 
     &::selection {

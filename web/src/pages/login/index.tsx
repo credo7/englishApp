@@ -25,6 +25,7 @@ const LoginInput = styled.input`
   margin-bottom: 30px;
   transition: all 0.1s ease-in;
   color: black;
+  box-shadow: 0 20px 40px rgba(88, 166, 255, 0.1);
 
   &:focus {
     border-color: #58a6ffc4;
@@ -46,7 +47,9 @@ const Login = () => {
   return (
     <Container>
       <div className="login-container">
-        <h1>Dictionary</h1>
+        <div className="login-registration">
+          <h1>Dictionary</h1>
+        </div>
         <form onSubmit={handleSubmit(loginSubmit)}>
           <LoginInput
             className="form-input"

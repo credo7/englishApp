@@ -92,8 +92,9 @@ const Register = () => {
   return (
     <Container>
       <div className="register-container">
+        <div className="login-registration">
         <h1>Registration</h1>
-
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
             type="text"
@@ -118,7 +119,7 @@ const Register = () => {
             {isLoading ? (
               <CircleLoading bgColor="#fff" width="35px" height="35px" />
             ) : (
-              "Register"
+              "Sign up"
             )}
           </button>
         </form>
