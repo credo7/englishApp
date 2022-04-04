@@ -7,11 +7,11 @@ import PrivateRoute from "./components/PrivateRoute";
 import { useMediaQuery } from "react-responsive";
 
 function App() {
-  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 525px)" });
 
   if (!isDesktop)
     return (
-      <div style={{ fontSize: "2em", marginTop: "100px" }}>
+      <div style={{ fontSize: "2em", marginTop: "100px", color:"black" }}>
         Window is too small :(
       </div>
     );
