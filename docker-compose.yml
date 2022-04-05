@@ -12,7 +12,7 @@ services:
     volumes:
       - ./db/data:/var/lib/postgresql/data
     networks:
-      - transcendence
+      - english
     ports:
       - ${TYPEORM_PORT}:${TYPEORM_PORT}
     command: postgres -c stats_temp_directory=/tmp
@@ -29,7 +29,7 @@ services:
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     networks:
-      transcendence:
+      english:
         ipv4_address: 172.20.0.5
     depends_on:
       - db
@@ -39,9 +39,9 @@ services:
     ports:
       - 3000:3000
     networks:
-      - transcendence
+      - english
 networks:
-  transcendence:
+  english:
     driver: bridge
     ipam:
       config:
