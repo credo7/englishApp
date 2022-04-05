@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import "./styles.scss";
-import { createUser, getUserByLogin } from "../../api/user";
+import { getUserByLogin } from "../../api/user";
 import CircleLoading from "../../components/CircleLoading";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import AuthContext from "../../context/AuthContext";
 
 const Container = styled.div`
   height: 100%;
@@ -28,8 +27,6 @@ const Register = () => {
     setError,
     formState: { errors },
   } = useForm<IRegisterForm>();
-
-  const { loginUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (errors.login) {
@@ -85,8 +82,6 @@ const Register = () => {
 
       return;
     }
-
-    const usersCreateResponse = await createUser(login, password, loginUser);
   };
 
   return (

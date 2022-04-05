@@ -31,7 +31,7 @@ const Search = ({
 
   useEffect(() => {
     dispatch(fetchWord(labelWord));
-  }, [labelWord]);
+  }, [labelWord, dispatch]);
 
   return (
     <Form onSubmit={addWord(setWords)}>
