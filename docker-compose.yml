@@ -29,7 +29,7 @@ services:
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     networks:
-      transcendence:
+      englishapp:
         ipv4_address: 172.20.0.5
     depends_on:
       - db
@@ -39,9 +39,9 @@ services:
     ports:
       - 3000:3000
     networks:
-      - transcendence
+      - englishapp
 networks:
-  transcendence:
+  englishapp:
     driver: bridge
     ipam:
       config:
