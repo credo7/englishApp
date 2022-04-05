@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { Tokens } from 'src/auth/types/tokens.type';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/entities/user.entity';
+import { UserEntity } from 'src/auth/entities/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

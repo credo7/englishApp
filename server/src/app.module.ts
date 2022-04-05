@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { AccessTokenGuard } from './common/guards';
-// import { PrismaModule } from './prisma/prisma.module';
-// import { WordModule } from './word/word.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { WordsModule } from './words/words.module';
 
 @Module({
   controllers: [],
@@ -34,6 +33,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       }),
     }),
     AuthModule,
+    WordsModule
   ],
 })
 export class AppModule {}

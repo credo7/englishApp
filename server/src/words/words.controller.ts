@@ -7,7 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { GetCurrentUser, GetCurrentUserId } from 'src/common/decorators';
+import { GetCurrentUser } from 'src/common/decorators';
 import { AccessTokenGuard } from 'src/common/guards';
 import { WordsService } from './words.service';
 
