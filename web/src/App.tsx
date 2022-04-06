@@ -8,7 +8,7 @@ import { useMediaQuery } from "react-responsive";
 import React from "react";
 
 function App() {
-  const isDesktop = useMediaQuery({ query: "(min-width: 525px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
 
   if (!isDesktop)
     return (
